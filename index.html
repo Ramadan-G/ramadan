@@ -396,7 +396,7 @@
             font-family: 'Amiri', serif;
         }
 
-        /* Stili i ri për lutjet */
+        /* Stili për lutjet */
         .dhikr-list {
             max-height: 500px;
             overflow-y: auto;
@@ -755,7 +755,7 @@
             </div>
         </div>
 
-        <!-- LUTJET ME KUTI TIK DHE NUMËR TË MADH -->
+        <!-- LUTJET -->
         <div class="card">
             <div class="card-header"><span>📿</span> Lutjet (Dhikr)</div>
             <div class="dhikr-list" id="dhikrContainer"></div>
@@ -830,70 +830,22 @@
 
     <script>
         const dhikrList = [
-            {
-                name: "Subhanallah (100x)",
-                arabic: "سُبْحَانَ اللَّهِ"
-            },
-            {
-                name: "Elhamdulilah (100x)",
-                arabic: "الْحَمْدُ لِلَّهِ"
-            },
-            {
-                name: "Allahu Ekber (100x)",
-                arabic: "اللهُ أَكْبَرُ"
-            },
-            {
-                name: "Estagfirullah (100x)",
-                arabic: "أَسْتَغْفِرُ اللَّهَ"
-            },
-            {
-                name: "La ilahe illallah Muhamedun Resulullah",
-                arabic: "لا إله إلا الله محمد رسول الله"
-            },
-            {
-                name: "SubhanAllahi ve bi hamdihi",
-                arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ"
-            },
-            {
-                name: "SubhanAllahi ve bi hamdihi, SubhanAllahil Adhim",
-                arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ"
-            },
-            {
-                name: "HasbijAllahu ve ni’mel vekil",
-                arabic: "حَسْبِيَ اللَّهُ وَنِعْمَ الْوَكِيلُ"
-            },
-            {
-                name: "La hawle ve la kuvvete illa billah",
-                arabic: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ"
-            },
-            {
-                name: "Salavatet",
-                arabic: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ"
-            },
-            {
-                name: "La ilahe illallah wahdehu la sherike leh, lehul mulku we lehul hamdu we huwe ala kuli shejin kadir",
-                arabic: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ"
-            },
-            {
-                name: "Estagfirullah ve etubu ilejh",
-                arabic: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ"
-            },
-            {
-                name: "Allahumme inni es’eluke’l xhenneh we eudhu bike mine nar (7x)",
-                arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ"
-            },
-            {
-                name: "Ihlas 13her",
-                arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ"
-            },
-            {
-                name: "La ilahe illa ente subhaneke inni kuntu mine dhalimin",
-                arabic: "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ"
-            },
-            {
-                name: "Hasbijallahu la ilahe ila huve, alejhi tevekeltu ve huve rabbul arshil adhim",
-                arabic: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ"
-            }
+            { name: "Subhanallah (100x)", arabic: "سُبْحَانَ اللَّهِ" },
+            { name: "Elhamdulilah (100x)", arabic: "الْحَمْدُ لِلَّهِ" },
+            { name: "Allahu Ekber (100x)", arabic: "اللهُ أَكْبَرُ" },
+            { name: "Estagfirullah (100x)", arabic: "أَسْتَغْفِرُ اللَّهَ" },
+            { name: "La ilahe illallah Muhamedun Resulullah", arabic: "لا إله إلا الله محمد رسول الله" },
+            { name: "SubhanAllahi ve bi hamdihi", arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ" },
+            { name: "SubhanAllahi ve bi hamdihi, SubhanAllahil Adhim", arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ" },
+            { name: "HasbijAllahu ve ni’mel vekil", arabic: "حَسْبِيَ اللَّهُ وَنِعْمَ الْوَكِيلُ" },
+            { name: "La hawle ve la kuvvete illa billah", arabic: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ" },
+            { name: "Salavatet", arabic: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ" },
+            { name: "La ilahe illallah wahdehu la sherike leh, lehul mulku we lehul hamdu we huwe ala kuli shejin kadir", arabic: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ" },
+            { name: "Estagfirullah ve etubu ilejh", arabic: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ" },
+            { name: "Allahumme inni es’eluke’l xhenneh we eudhu bike mine nar (7x)", arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ" },
+            { name: "Ihlas 13her", arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ" },
+            { name: "La ilahe illa ente subhaneke inni kuntu mine dhalimin", arabic: "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ" },
+            { name: "Hasbijallahu la ilahe ila huve, alejhi tevekeltu ve huve rabbul arshil adhim", arabic: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ" }
         ];
 
         let currentDay = 1;
@@ -972,7 +924,6 @@
             document.getElementById('nateRakat').innerText = data.voluntary.nate;
             document.getElementById('teraviRakat').innerText = data.voluntary.teravi;
 
-            // Ngarko vlerat e dhikrit
             for (let i = 0; i < dhikrList.length; i++) {
                 const checkbox = document.getElementById(`dhikr-check-${i}`);
                 const numberDiv = document.getElementById(`dhikr-number-${i}`);
@@ -1074,7 +1025,6 @@
                 }
             };
 
-            // Ruaj vlerat e dhikrit
             for (let i = 0; i < dhikrList.length; i++) {
                 const checkbox = document.getElementById(`dhikr-check-${i}`);
                 const numberDiv = document.getElementById(`dhikr-number-${i}`);
@@ -1190,7 +1140,18 @@
 
         function getLocation() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition, showError);
+                const timeoutId = setTimeout(() => {
+                    showError({ code: 3, message: 'Timeout' });
+                }, 10000);
+                
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        clearTimeout(timeoutId);
+                        showPosition(position);
+                    },
+                    showError,
+                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
+                );
             } else {
                 document.getElementById('locationDisplay').innerHTML = '📍 Geolokacioni nuk mbështetet';
                 useFallbackTimes();
@@ -1202,52 +1163,59 @@
                 lat: position.coords.latitude,
                 lon: position.coords.longitude
             };
+            
             fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${userCoords.lat}&lon=${userCoords.lon}`)
                 .then(response => response.json())
                 .then(data => {
-                    const city = data.address.city || data.address.town || data.address.village || 'vendndodhja juaj';
+                    const city = data.address.city || data.address.town || data.address.village || data.address.county || 'vendndodhja juaj';
                     document.getElementById('locationDisplay').innerHTML = `📍 ${city}`;
                 })
                 .catch(() => {
                     document.getElementById('locationDisplay').innerHTML = '📍 Vendndodhja juaj';
                 });
 
-            fetch(`https://api.aladhan.com/v1/timings?latitude=${userCoords.lat}&longitude=${userCoords.lon}&method=13`)
-                .then(response => response.json())
+            fetch(`https://api.aladhan.com/v1/timings?latitude=${userCoords.lat}&longitude=${userCoords.lon}&method=3`)
+                .then(response => {
+                    if (!response.ok) throw new Error('Network response was not ok');
+                    return response.json();
+                })
                 .then(data => {
+                    if (data.code !== 200) throw new Error('API returned error');
+                    
                     const timings = data.data.timings;
                     const hijri = data.data.date.hijri;
                     
-                    const day = hijri.day;
-                    const hijriDay = parseInt(day);
+                    const formatTime = (timeStr) => {
+                        const match = timeStr.match(/(\d{1,2}):(\d{2})/);
+                        return match ? `${match[1].padStart(2, '0')}:${match[2]}` : timeStr;
+                    };
                     
-                    let displayDay = hijriDay;
-                    if (hijriDay > 1) {
-                        displayDay = hijriDay - 1;
-                    }
-                    
+                    // Dita reale nga API
+                    const apiDay = parseInt(hijri.day);
+                    // Dita që do të shfaqim në UI (minus 1, por jo më pak se 1)
+                    const displayDay = apiDay > 1 ? apiDay - 1 : 1;
                     currentDay = displayDay;
                     
-                    const formattedDay = displayDay.toString().padStart(2, '0');
                     const month = 'Ramazan';
                     const year = hijri.year;
-                    const hijriDateStr = `${formattedDay} ${month} ${year}`;
+                    // Data hixhri e shfaqur përdor displayDay (të njëjtën si currentDay)
+                    const hijriDateStr = `${displayDay.toString().padStart(2, '0')} ${month} ${year}`;
                     
                     prayerTimes = [
-                        { name: 'Sabah', time: timings.Fajr },
-                        { name: 'Dreka', time: timings.Dhuhr },
-                        { name: 'Ikindia', time: timings.Asr },
-                        { name: 'Akshami', time: timings.Maghrib },
-                        { name: 'Jacia', time: timings.Isha }
+                        { name: 'Sabah', time: formatTime(timings.Fajr) },
+                        { name: 'Dreka', time: formatTime(timings.Dhuhr) },
+                        { name: 'Ikindia', time: formatTime(timings.Asr) },
+                        { name: 'Akshami', time: formatTime(timings.Maghrib) },
+                        { name: 'Jacia', time: formatTime(timings.Isha) }
                     ];
-                    sunriseTimeStr = timings.Sunrise;
+                    
+                    sunriseTimeStr = formatTime(timings.Sunrise);
                     
                     document.getElementById('hijriDate').innerText = hijriDateStr;
                     document.getElementById('sunriseTime').innerText = sunriseTimeStr;
                     document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
                     
                     loadDayData(currentDay);
-                    
                     updatePrayerCard();
                 })
                 .catch(error => {
@@ -1257,19 +1225,8 @@
         }
 
         function showError(error) {
-            let msg = '';
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    msg = "Përdoruesi nuk e lejoi kërkesën për lokacion.";
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    msg = "Informacioni i lokacionit nuk është i disponueshëm.";
-                    break;
-                case error.TIMEOUT:
-                    msg = "Kërkesa për lokacion u skadua.";
-                    break;
-            }
-            document.getElementById('locationDisplay').innerHTML = `📍 ${msg}`;
+            console.warn('Geolocation error:', error);
+            document.getElementById('locationDisplay').innerHTML = '📍 Vendndodhja nuk u gjet, duke përdorur oraret standarde...';
             useFallbackTimes();
         }
 
@@ -1278,7 +1235,7 @@
                 { name: 'Sabah', time: '05:40' },
                 { name: 'Dreka', time: '12:43' },
                 { name: 'Ikindia', time: '15:19' },
-                { name: 'Aksham', time: '17:53' },
+                { name: 'Akshami', time: '17:53' },
                 { name: 'Jacia', time: '19:30' }
             ];
             sunriseTimeStr = '06:48';
@@ -1292,27 +1249,37 @@
 
         function updatePrayerCard() {
             if (prayerTimes.length === 0) return;
-            const now = getCurrentMinutes();
-            const prayerMins = prayerTimes.map(p => timeToMinutes(p.time));
-            let nextIndex = prayerMins.findIndex(t => t > now);
-            let timeUntil;
-            if (nextIndex === -1) {
-                nextIndex = 0;
-                timeUntil = (24 * 60 - now) + prayerMins[0];
-            } else {
-                timeUntil = prayerMins[nextIndex] - now;
-            }
-            const nextPrayer = prayerTimes[nextIndex];
-            document.getElementById('nextPrayerText').innerHTML = `${nextPrayer.name} për ${formatDuration(timeUntil)}`;
+            
+            try {
+                const now = getCurrentMinutes();
+                const prayerMins = prayerTimes.map(p => {
+                    const t = timeToMinutes(p.time);
+                    return isNaN(t) ? 0 : t;
+                });
+                
+                let nextIndex = prayerMins.findIndex(t => t > now);
+                let timeUntil;
+                if (nextIndex === -1) {
+                    nextIndex = 0;
+                    timeUntil = (24 * 60 - now) + prayerMins[0];
+                } else {
+                    timeUntil = prayerMins[nextIndex] - now;
+                }
+                
+                const nextPrayer = prayerTimes[nextIndex];
+                document.getElementById('nextPrayerText').innerHTML = `${nextPrayer.name} për ${formatDuration(timeUntil)}`;
 
-            const container = document.getElementById('prayerTimesContainer');
-            container.innerHTML = '';
-            prayerTimes.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'prayer-time-item';
-                div.innerHTML = `${p.name}<br><strong>${p.time}</strong>`;
-                container.appendChild(div);
-            });
+                const container = document.getElementById('prayerTimesContainer');
+                container.innerHTML = '';
+                prayerTimes.forEach(p => {
+                    const div = document.createElement('div');
+                    div.className = 'prayer-time-item';
+                    div.innerHTML = `${p.name}<br><strong>${p.time}</strong>`;
+                    container.appendChild(div);
+                });
+            } catch (e) {
+                console.error('Error updating prayer card:', e);
+            }
         }
 
         function getCurrentMinutes() {
@@ -1321,11 +1288,16 @@
         }
 
         function timeToMinutes(timeStr) {
-            const [h, m] = timeStr.split(':').map(Number);
+            if (!timeStr) return 0;
+            const parts = timeStr.split(':');
+            if (parts.length < 2) return 0;
+            const h = parseInt(parts[0]) || 0;
+            const m = parseInt(parts[1]) || 0;
             return h * 60 + m;
         }
 
         function formatDuration(min) {
+            if (min < 0) min = 0;
             const h = Math.floor(min / 60);
             const m = min % 60;
             return `${h}h ${m}m`;
