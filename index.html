@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Ramadan 2026</title>
+    <title>Ramazani 2026/1447</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -26,7 +26,6 @@
             font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        /* Stili i bukur për titujt dhe header-at */
         h1, h2, h3, .card-header, .title h1, .stat-value, .location-badge, .next-badge, .info-badge, .prayer-time-item strong, .farz-item .name, .sunnah-item .name, .rakat-label, .dhikr-name, .field label, .footer {
             font-family: 'Amiri', serif;
         }
@@ -210,7 +209,6 @@
             font-size: 2rem;
         }
 
-        /* Stilet për oraret e namazeve */
         .location-row {
             display: flex;
             justify-content: space-between;
@@ -280,7 +278,6 @@
             font-family: 'Amiri', serif;
         }
 
-        /* Farzet në dy kolona */
         .farz-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -306,7 +303,6 @@
             font-size: 1rem;
         }
 
-        /* Sunetet në një kolonë */
         .sunnah-list {
             display: flex;
             flex-direction: column;
@@ -358,7 +354,6 @@
             color: white;
         }
 
-        /* Namazet vullnetare */
         .rakat-selector {
             display: flex;
             align-items: center;
@@ -401,7 +396,7 @@
             font-family: 'Amiri', serif;
         }
 
-        /* Dhikr */
+        /* Stili i ri për lutjet */
         .dhikr-list {
             max-height: 500px;
             overflow-y: auto;
@@ -409,51 +404,46 @@
         }
         .dhikr-item {
             background: #fefaf5;
-            border-radius: 60px;
-            padding: 8px 16px 8px 22px;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            border-radius: 30px;
+            padding: 16px;
+            margin-bottom: 12px;
             border: 1px solid #f5dccf;
-        }
-        .dhikr-name {
-            font-size: 0.9rem;
-            font-weight: 500;
-            max-width: 240px;
-        }
-        .dhikr-counter {
             display: flex;
             align-items: center;
             gap: 16px;
         }
-        .dhikr-counter span {
-            font-size: 2rem;
-            font-weight: 600;
-            min-width: 60px;
-            text-align: center;
+        .dhikr-checkbox {
+            width: 40px;
+            height: 40px;
+            accent-color: #e6b17e;
+            border-radius: 10px;
+            flex-shrink: 0;
+        }
+        .dhikr-content {
+            flex: 1;
+        }
+        .dhikr-name-arabic {
             font-family: 'Amiri', serif;
+            font-size: 1.1rem;
+            color: #b35e3a;
+            margin-bottom: 4px;
         }
-        .dhikr-plus {
-            background: #e6b17e;
-            border: none;
-            width: 48px;
-            height: 48px;
-            border-radius: 48px;
+        .dhikr-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #5d4037;
+        }
+        .dhikr-number {
+            font-family: 'Amiri', serif;
             font-size: 2.2rem;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 2px 6px rgba(230,177,126,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.1s;
-        }
-        .dhikr-plus:active {
-            transform: scale(0.95);
+            font-weight: 700;
+            color: #e6b17e;
+            min-width: 80px;
+            text-align: center;
+            border-left: 2px solid #f5dccf;
+            padding-left: 16px;
         }
 
-        /* Kur'ani */
         .page-input-group {
             display: flex;
             align-items: center;
@@ -538,7 +528,6 @@
             margin: 30px 0 10px;
         }
 
-        /* Stili për kartelën e reklamës (Hurme Sukeri) */
         .ad-card {
             background: #fff3e9;
             border: 2px solid #e6b17e;
@@ -606,7 +595,7 @@
 <body>
     <div id="loginOverlay" class="login-overlay">
         <div class="login-card">
-            <h2>🌙 Ramadan 2026</h2>
+            <h2>🌙 Ramazani 2026/1447</h2>
             <p>Shkruaj emrin tënd për të vazhduar</p>
             <input type="text" id="usernameInput" class="login-input" placeholder="Emri yt" autocomplete="off">
             <button class="login-btn" onclick="saveUsername()">Fillo</button>
@@ -616,7 +605,7 @@
     <div class="app" id="mainApp" style="display: none;">
         <div class="header">
             <div class="title">
-                <h1>Ramadan 2026</h1>
+                <h1>Ramazani 2026/1447</h1>
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
                 <span class="user-greeting" id="userGreeting"></span>
@@ -628,7 +617,6 @@
             </div>
         </div>
 
-        <!-- KARTA E NAMAZEVE -->
         <div class="card">
             <div class="card-header"><span>🕋</span> Koha e namazeve</div>
             <div class="location-row">
@@ -641,7 +629,7 @@
             </div>
             <div class="info-row">
                 <div class="info-badge">
-                    🌅 Lindja: <strong id="sunriseTime">--:--</strong>
+                    🌅 Lindja e djellit: <strong id="sunriseTime">--:--</strong>
                 </div>
                 <div class="info-badge">
                     📅 <span id="hijriDate">Duke marrë...</span>
@@ -650,127 +638,137 @@
             <div class="prayer-times-grid" id="prayerTimesContainer"></div>
         </div>
 
-        <!-- NAMAZET FARZ -->
         <div class="card">
             <div class="card-header"><span>🕋</span> Namazet farz</div>
             <div class="farz-grid">
                 <div class="farz-item">
-                    <input type="checkbox" id="farzSabah" class="farz-checkbox">
+                    <input type="checkbox" id="farzSabah" class="farz-checkbox" onchange="saveCurrentDay()">
                     <span class="name">Sabah</span>
                 </div>
                 <div class="farz-item">
-                    <input type="checkbox" id="farzDreka" class="farz-checkbox">
+                    <input type="checkbox" id="farzDreka" class="farz-checkbox" onchange="saveCurrentDay()">
                     <span class="name">Dreka</span>
                 </div>
                 <div class="farz-item">
-                    <input type="checkbox" id="farzIkindia" class="farz-checkbox">
+                    <input type="checkbox" id="farzIkindia" class="farz-checkbox" onchange="saveCurrentDay()">
                     <span class="name">Ikindia</span>
                 </div>
                 <div class="farz-item">
-                    <input type="checkbox" id="farzAksham" class="farz-checkbox">
-                    <span class="name">Aksham</span>
+                    <input type="checkbox" id="farzAksham" class="farz-checkbox" onchange="saveCurrentDay()">
+                    <span class="name">Akshami</span>
                 </div>
                 <div class="farz-item">
-                    <input type="checkbox" id="farzJacia" class="farz-checkbox">
+                    <input type="checkbox" id="farzJacia" class="farz-checkbox" onchange="saveCurrentDay()">
                     <span class="name">Jacia</span>
                 </div>
             </div>
         </div>
 
-        <!-- SUNETET -->
         <div class="card">
             <div class="card-header"><span>🕌</span> Sunetet</div>
             <div class="sunnah-list">
                 <div class="sunnah-item">
                     <div class="control sunnah-choice" id="sunnahSabah">
-                        <button class="choice-btn" data-choice="yes">✓</button>
-                        <button class="choice-btn" data-choice="no">✗</button>
+                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('sabah', 'yes')">✓</button>
+                        <button class="choice-btn" data-choice="no" onclick="setSunnah('sabah', 'no')">✗</button>
                     </div>
                     <span class="name">Sabah (2 rekate)</span>
                 </div>
                 <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahDreka">
-                        <button class="choice-btn" data-choice="yes">✓</button>
-                        <button class="choice-btn" data-choice="no">✗</button>
+                    <div class="control sunnah-choice" id="sunnahDreka1">
+                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('dreka1', 'yes')">✓</button>
+                        <button class="choice-btn" data-choice="no" onclick="setSunnah('dreka1', 'no')">✗</button>
                     </div>
-                    <span class="name">Dreka (4+2 rekate)</span>
+                    <span class="name">Dreka (4 rekate)</span>
+                </div>
+                <div class="sunnah-item">
+                    <div class="control sunnah-choice" id="sunnahDreka2">
+                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('dreka2', 'yes')">✓</button>
+                        <button class="choice-btn" data-choice="no" onclick="setSunnah('dreka2', 'no')">✗</button>
+                    </div>
+                    <span class="name">Dreka (2 rekate)</span>
                 </div>
                 <div class="sunnah-item">
                     <div class="control sunnah-choice" id="sunnahIkindia">
-                        <button class="choice-btn" data-choice="yes">✓</button>
-                        <button class="choice-btn" data-choice="no">✗</button>
+                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('ikindia', 'yes')">✓</button>
+                        <button class="choice-btn" data-choice="no" onclick="setSunnah('ikindia', 'no')">✗</button>
                     </div>
                     <span class="name">Ikindia (4 rekate)</span>
                 </div>
                 <div class="sunnah-item">
                     <div class="control sunnah-choice" id="sunnahAksham">
-                        <button class="choice-btn" data-choice="yes">✓</button>
-                        <button class="choice-btn" data-choice="no">✗</button>
+                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('aksham', 'yes')">✓</button>
+                        <button class="choice-btn" data-choice="no" onclick="setSunnah('aksham', 'no')">✗</button>
                     </div>
-                    <span class="name">Aksham (2 rekate)</span>
+                    <span class="name">Akshami (2 rekate)</span>
                 </div>
                 <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahJacia">
-                        <button class="choice-btn" data-choice="yes">✓</button>
-                        <button class="choice-btn" data-choice="no">✗</button>
+                    <div class="control sunnah-choice" id="sunnahJacia1">
+                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('jacia1', 'yes')">✓</button>
+                        <button class="choice-btn" data-choice="no" onclick="setSunnah('jacia1', 'no')">✗</button>
                     </div>
-                    <span class="name">Jacia (4+2 rekate)</span>
+                    <span class="name">Jacia (4 rekate)</span>
+                </div>
+                <div class="sunnah-item">
+                    <div class="control sunnah-choice" id="sunnahJacia2">
+                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('jacia2', 'yes')">✓</button>
+                        <button class="choice-btn" data-choice="no" onclick="setSunnah('jacia2', 'no')">✗</button>
+                    </div>
+                    <span class="name">Jacia (2 rekate)</span>
                 </div>
             </div>
         </div>
 
-        <!-- NAMAZET VULLNETARE -->
         <div class="card">
-            <div class="card-header">Namazet vullnetare</div>
+            <div class="card-header"><span>🕌</span> Namazet vullnetare</div>
             <div class="rakat-selector">
                 <span class="rakat-label">Duha</span>
                 <div class="rakat-controls">
-                    <button class="rakat-btn" onclick="changeRakat('duha', -1)">−</button>
+                    <button class="rakat-btn" onclick="changeRakat('duha', -2)">−</button>
                     <span class="rakat-num" id="duhaRakat">0</span>
-                    <button class="rakat-btn" onclick="changeRakat('duha', 1)">+</button>
+                    <button class="rakat-btn" onclick="changeRakat('duha', 2)">+</button>
                 </div>
             </div>
             <div class="rakat-selector">
                 <span class="rakat-label">Nafile</span>
                 <div class="rakat-controls">
-                    <button class="rakat-btn" onclick="changeRakat('nafile', -1)">−</button>
+                    <button class="rakat-btn" onclick="changeRakat('nafile', -2)">−</button>
                     <span class="rakat-num" id="nafileRakat">0</span>
-                    <button class="rakat-btn" onclick="changeRakat('nafile', 1)">+</button>
+                    <button class="rakat-btn" onclick="changeRakat('nafile', 2)">+</button>
                 </div>
             </div>
             <div class="rakat-selector">
                 <span class="rakat-label">Tehexhud-i nates</span>
                 <div class="rakat-controls">
-                    <button class="rakat-btn" onclick="changeRakat('nate', -1)">−</button>
+                    <button class="rakat-btn" onclick="changeRakat('nate', -2)">−</button>
                     <span class="rakat-num" id="nateRakat">0</span>
-                    <button class="rakat-btn" onclick="changeRakat('nate', 1)">+</button>
+                    <button class="rakat-btn" onclick="changeRakat('nate', 2)">+</button>
                 </div>
             </div>
             <div class="rakat-selector">
                 <span class="rakat-label">Teravite</span>
                 <div class="rakat-controls">
-                    <button class="rakat-btn" onclick="changeRakat('teravi', -1)">−</button>
+                    <button class="rakat-btn" onclick="changeRakat('teravi', -2)">−</button>
                     <span class="rakat-num" id="teraviRakat">0</span>
-                    <button class="rakat-btn" onclick="changeRakat('teravi', 1)">+</button>
+                    <button class="rakat-btn" onclick="changeRakat('teravi', 2)">+</button>
                 </div>
             </div>
         </div>
 
-        <!-- LUTJET (DHIKR) -->
+        <!-- LUTJET ME KUTI TIK DHE NUMËR TË MADH -->
         <div class="card">
             <div class="card-header"><span>📿</span> Lutjet (Dhikr)</div>
             <div class="dhikr-list" id="dhikrContainer"></div>
             <button class="save-btn" style="margin-top: 20px;" onclick="resetAllDhikr()">Rivendos të gjitha në 0</button>
         </div>
 
-        <!-- KUR'ANI -->
         <div class="card">
             <div class="card-header"><span>📖</span> Kur'ani (faqe)</div>
             <div class="page-input-group">
                 <label>Nga:</label>
-                <input type="number" id="fromPage" value="1" min="1" max="604">
+                <input type="number" id="fromPage" value="1" min="1" max="604" onchange="saveCurrentDay()">
                 <label>në:</label>
-                <input type="number" id="toPage" value="1" min="1" max="604">
+                <input type="number" id="toPage" value="1" min="1" max="604" onchange="saveCurrentDay()">
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span style="font-weight:500;">Sot: <span id="todayPages">0</span> faqe</span>
@@ -782,25 +780,27 @@
             </div>
         </div>
 
-        <!-- DUA, SADAKA, REFLEKTIMI -->
         <div class="card">
             <div class="card-header"><span>🤲</span> Dua dhe reflektim</div>
             <div class="field">
+                <label>Nje Hadith ne ditë</label>
+                <textarea id="hadith" rows="2" placeholder="Atij që agjëron një ditë në rrugën e Allahut, Allahu do t’ia largojë fytyrën nga Zjarri për shtatëdhjetë vjet." onchange="saveCurrentDay()"></textarea>
+            </div>
+            <div class="field">
                 <label>Dua (lutja e ditës)</label>
-                <textarea id="dua" rows="2" placeholder="O Allah, më jep forcë dhe durim..."></textarea>
+                <textarea id="dua" rows="2" placeholder="O Allah, më jep forcë dhe durim..." onchange="saveCurrentDay()"></textarea>
             </div>
             <div class="field">
                 <label>Sadaka (€)</label>
-                <input type="number" id="sadaka" value="0" min="0" step="0.5" placeholder="Shuma e dhënë">
+                <input type="number" id="sadaka" value="0" min="0" step="0.5" placeholder="Shuma e dhënë" onchange="saveCurrentDay()">
             </div>
             <div class="field">
                 <label>Reflektimi ditor</label>
-                <textarea id="reflection" rows="3" placeholder="Si u ndjeva sot? Çfarë mund të përmirësoj?"></textarea>
+                <textarea id="reflection" rows="3" placeholder="Si u ndjeva sot? Çfarë mund të përmirësoj?" onchange="saveCurrentDay()"></textarea>
             </div>
             <button class="save-btn" onclick="saveCurrentDay()">Ruaj të dhënat</button>
         </div>
 
-        <!-- KARTELA E REKLAMËS (HURME SUKERI) -->
         <div class="card ad-card">
             <img src="https://i.postimg.cc/FKDPHG2b/IMG-20260219-WA0000.jpg" alt="Hurme Sukeri" style="width:100%; border-radius:24px; margin-bottom:16px; border:2px solid #e6b17e;">
             <div class="ad-title">Hurme Sukeri</div>
@@ -830,22 +830,70 @@
 
     <script>
         const dhikrList = [
-            "Subhanallah (100x)",
-            "Elhamdulilah (100x)",
-            "Allahu Ekber (100x)",
-            "Estagfirullah (100x)",
-            "La ilahe illallah, Muhamedun Resulullah",
-            "SubhanAllahi ve bi hamdihi",
-            "SubhanAllahi ve bi hamdihi, SubhanAllahil Adhim",
-            "HasbijAllahu ve ni’mel vekil",
-            "La hawle ve la kuvvete illa billah",
-            "Salavatet",
-            "La ilahe illallah wahdehu la sherike leh, lehul mulku we lehul hamdu we huwe ala kuli shejin kadir",
-            "Estagfirullah ve etubu ilejh",
-            "Allahumme inni es’eluke’l xhenneh we eudhu bike mine nar (7x)",
-            "Ihlas 13her",
-            "La ilahe illa ente subhaneke inni kuntu mine dhalimin",
-            "Hasbijallahu la ilahe ila huve, alejhi tevekeltu ve huve rabbul arshil adhim"
+            {
+                name: "Subhanallah (100x)",
+                arabic: "سُبْحَانَ اللَّهِ"
+            },
+            {
+                name: "Elhamdulilah (100x)",
+                arabic: "الْحَمْدُ لِلَّهِ"
+            },
+            {
+                name: "Allahu Ekber (100x)",
+                arabic: "اللهُ أَكْبَرُ"
+            },
+            {
+                name: "Estagfirullah (100x)",
+                arabic: "أَسْتَغْفِرُ اللَّهَ"
+            },
+            {
+                name: "La ilahe illallah Muhamedun Resulullah",
+                arabic: "لا إله إلا الله محمد رسول الله"
+            },
+            {
+                name: "SubhanAllahi ve bi hamdihi",
+                arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ"
+            },
+            {
+                name: "SubhanAllahi ve bi hamdihi, SubhanAllahil Adhim",
+                arabic: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ الْعَظِيمِ"
+            },
+            {
+                name: "HasbijAllahu ve ni’mel vekil",
+                arabic: "حَسْبِيَ اللَّهُ وَنِعْمَ الْوَكِيلُ"
+            },
+            {
+                name: "La hawle ve la kuvvete illa billah",
+                arabic: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ"
+            },
+            {
+                name: "Salavatet",
+                arabic: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ"
+            },
+            {
+                name: "La ilahe illallah wahdehu la sherike leh, lehul mulku we lehul hamdu we huwe ala kuli shejin kadir",
+                arabic: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ"
+            },
+            {
+                name: "Estagfirullah ve etubu ilejh",
+                arabic: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ"
+            },
+            {
+                name: "Allahumme inni es’eluke’l xhenneh we eudhu bike mine nar (7x)",
+                arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ"
+            },
+            {
+                name: "Ihlas 13her",
+                arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ"
+            },
+            {
+                name: "La ilahe illa ente subhaneke inni kuntu mine dhalimin",
+                arabic: "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ"
+            },
+            {
+                name: "Hasbijallahu la ilahe ila huve, alejhi tevekeltu ve huve rabbul arshil adhim",
+                arabic: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ"
+            }
         ];
 
         let currentDay = 1;
@@ -904,51 +952,65 @@
 
         function loadDayData(day) {
             const data = dayData[day] || createEmptyDayData();
-            // Farz
+            
             document.getElementById('farzSabah').checked = data.farz.sabah;
             document.getElementById('farzDreka').checked = data.farz.dreka;
             document.getElementById('farzIkindia').checked = data.farz.ikindia;
             document.getElementById('farzAksham').checked = data.farz.aksham;
             document.getElementById('farzJacia').checked = data.farz.jacia;
 
-            // Sunnah
             setSunnahChoice('sunnahSabah', data.sunnah.sabah);
-            setSunnahChoice('sunnahDreka', data.sunnah.dreka);
+            setSunnahChoice('sunnahDreka1', data.sunnah.dreka1);
+            setSunnahChoice('sunnahDreka2', data.sunnah.dreka2);
             setSunnahChoice('sunnahIkindia', data.sunnah.ikindia);
             setSunnahChoice('sunnahAksham', data.sunnah.aksham);
-            setSunnahChoice('sunnahJacia', data.sunnah.jacia);
+            setSunnahChoice('sunnahJacia1', data.sunnah.jacia1);
+            setSunnahChoice('sunnahJacia2', data.sunnah.jacia2);
 
-            // Rekate vullnetare
             document.getElementById('duhaRakat').innerText = data.voluntary.duha;
             document.getElementById('nafileRakat').innerText = data.voluntary.nafile;
             document.getElementById('nateRakat').innerText = data.voluntary.nate;
             document.getElementById('teraviRakat').innerText = data.voluntary.teravi;
 
-            // Dhikr
+            // Ngarko vlerat e dhikrit
             for (let i = 0; i < dhikrList.length; i++) {
-                const span = document.getElementById(`dhikr-${i}`);
-                if (span) span.innerText = data.dhikr[i];
+                const checkbox = document.getElementById(`dhikr-check-${i}`);
+                const numberDiv = document.getElementById(`dhikr-number-${i}`);
+                if (checkbox) checkbox.checked = data.dhikr.checked[i] || false;
+                if (numberDiv) numberDiv.innerText = data.dhikr.counts[i] || 0;
             }
 
-            // Kur'an
             document.getElementById('fromPage').value = data.quran.fromPage;
             document.getElementById('toPage').value = data.quran.toPage;
-            calculatePages();
-
-            // Fushat e reja
+            
+            document.getElementById('hadith').value = data.hadithReflection?.hadith || '';
             document.getElementById('dua').value = data.duaReflection.dua || '';
             document.getElementById('sadaka').value = data.duaReflection.sadaka || 0;
             document.getElementById('reflection').value = data.duaReflection.reflection || '';
+            
+            calculatePages();
         }
 
         function createEmptyDayData() {
             return {
                 farz: { sabah: false, dreka: false, ikindia: false, aksham: false, jacia: false },
-                sunnah: { sabah: 'no', dreka: 'no', ikindia: 'no', aksham: 'no', jacia: 'no' },
+                sunnah: { 
+                    sabah: 'no', 
+                    dreka1: 'no', 
+                    dreka2: 'no', 
+                    ikindia: 'no', 
+                    aksham: 'no', 
+                    jacia1: 'no', 
+                    jacia2: 'no' 
+                },
                 voluntary: { duha: 0, nafile: 0, nate: 0, teravi: 0 },
-                dhikr: new Array(16).fill(0),
+                dhikr: {
+                    checked: new Array(16).fill(false),
+                    counts: new Array(16).fill(0)
+                },
                 quran: { fromPage: 1, toPage: 1 },
-                duaReflection: { dua: '', sadaka: 0, reflection: '' }
+                duaReflection: { dua: '', sadaka: 0, reflection: '' },
+                hadithReflection: { hadith: '' }
             };
         }
 
@@ -964,6 +1026,12 @@
             });
         }
 
+        function setSunnah(prayer, value) {
+            const containerId = 'sunnah' + prayer.charAt(0).toUpperCase() + prayer.slice(1);
+            setSunnahChoice(containerId, value);
+            saveCurrentDay();
+        }
+
         function saveCurrentDay() {
             const data = {
                 farz: {
@@ -975,10 +1043,12 @@
                 },
                 sunnah: {
                     sabah: getSunnahChoice('sunnahSabah'),
-                    dreka: getSunnahChoice('sunnahDreka'),
+                    dreka1: getSunnahChoice('sunnahDreka1'),
+                    dreka2: getSunnahChoice('sunnahDreka2'),
                     ikindia: getSunnahChoice('sunnahIkindia'),
                     aksham: getSunnahChoice('sunnahAksham'),
-                    jacia: getSunnahChoice('sunnahJacia')
+                    jacia1: getSunnahChoice('sunnahJacia1'),
+                    jacia2: getSunnahChoice('sunnahJacia2')
                 },
                 voluntary: {
                     duha: parseInt(document.getElementById('duhaRakat').innerText) || 0,
@@ -986,7 +1056,10 @@
                     nate: parseInt(document.getElementById('nateRakat').innerText) || 0,
                     teravi: parseInt(document.getElementById('teraviRakat').innerText) || 0
                 },
-                dhikr: [],
+                dhikr: {
+                    checked: [],
+                    counts: []
+                },
                 quran: {
                     fromPage: parseInt(document.getElementById('fromPage').value) || 1,
                     toPage: parseInt(document.getElementById('toPage').value) || 1
@@ -995,12 +1068,18 @@
                     dua: document.getElementById('dua').value,
                     sadaka: parseFloat(document.getElementById('sadaka').value) || 0,
                     reflection: document.getElementById('reflection').value
+                },
+                hadithReflection: {
+                    hadith: document.getElementById('hadith').value
                 }
             };
 
+            // Ruaj vlerat e dhikrit
             for (let i = 0; i < dhikrList.length; i++) {
-                const span = document.getElementById(`dhikr-${i}`);
-                data.dhikr.push(parseInt(span.innerText) || 0);
+                const checkbox = document.getElementById(`dhikr-check-${i}`);
+                const numberDiv = document.getElementById(`dhikr-number-${i}`);
+                data.dhikr.checked.push(checkbox ? checkbox.checked : false);
+                data.dhikr.counts.push(parseInt(numberDiv.innerText) || 0);
             }
 
             dayData[currentDay] = data;
@@ -1030,9 +1109,7 @@
         }
 
         function changeDay(delta) {
-            // Ruaj ditën aktuale para se të largohemi
             saveCurrentDay();
-
             currentDay += delta;
             if (currentDay < 1) currentDay = 1;
             if (currentDay > 30) currentDay = 30;
@@ -1050,46 +1127,44 @@
             if (which === 'nate' && val > 20) val = 20;
             if (which === 'nafile' && val > 100) val = 100;
             el.innerText = val;
+            saveCurrentDay();
         }
 
         function calculatePages() {
-            const from = parseInt(document.getElementById('fromPage').value) || 0;
-            const to = parseInt(document.getElementById('toPage').value) || 0;
+            const from = parseInt(document.getElementById('fromPage').value) || 1;
+            const to = parseInt(document.getElementById('toPage').value) || 1;
             if (to >= from) {
                 document.getElementById('todayPages').innerText = to - from;
-            } else {
-                alert('Faqja "deri" duhet të jetë më e madhe se "nga"');
             }
+            saveCurrentDay();
         }
 
         function renderDhikr() {
             const container = document.getElementById('dhikrContainer');
             container.innerHTML = '';
-            dhikrList.forEach((text, index) => {
-                const item = document.createElement('div');
-                item.className = 'dhikr-item';
-                item.innerHTML = `
-                    <span class="dhikr-name">${index+1}. ${text}</span>
-                    <div class="dhikr-counter">
-                        <span id="dhikr-${index}">0</span>
-                        <button class="dhikr-plus" onclick="increaseDhikr(${index})">+</button>
+            dhikrList.forEach((item, index) => {
+                const dhikrItem = document.createElement('div');
+                dhikrItem.className = 'dhikr-item';
+                dhikrItem.innerHTML = `
+                    <input type="checkbox" class="dhikr-checkbox" id="dhikr-check-${index}" onchange="saveCurrentDay()">
+                    <div class="dhikr-content">
+                        <div class="dhikr-name-arabic">${item.arabic}</div>
+                        <div class="dhikr-name">${index+1}. ${item.name}</div>
                     </div>
+                    <div class="dhikr-number" id="dhikr-number-${index}" contenteditable="true" onblur="saveCurrentDay()">0</div>
                 `;
-                container.appendChild(item);
+                container.appendChild(dhikrItem);
             });
-        }
-
-        function increaseDhikr(index) {
-            const span = document.getElementById(`dhikr-${index}`);
-            let val = parseInt(span.innerText) || 0;
-            span.innerText = val + 1;
         }
 
         function resetAllDhikr() {
             for (let i = 0; i < dhikrList.length; i++) {
-                const span = document.getElementById(`dhikr-${i}`);
-                if (span) span.innerText = '0';
+                const checkbox = document.getElementById(`dhikr-check-${i}`);
+                const numberDiv = document.getElementById(`dhikr-number-${i}`);
+                if (checkbox) checkbox.checked = false;
+                if (numberDiv) numberDiv.innerText = '0';
             }
+            saveCurrentDay();
         }
 
         function setupSunnahChoices() {
@@ -1098,6 +1173,7 @@
                 const btns = container.querySelectorAll('.choice-btn');
                 btns.forEach(btn => {
                     btn.addEventListener('click', function(e) {
+                        e.preventDefault();
                         btns.forEach(b => {
                             b.classList.remove('active-yes', 'active-no');
                         });
@@ -1106,12 +1182,12 @@
                         } else {
                             this.classList.add('active-no');
                         }
+                        saveCurrentDay();
                     });
                 });
             });
         }
 
-        // Funksionet e lokacionit dhe orareve
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition, showError);
@@ -1142,9 +1218,17 @@
                     const timings = data.data.timings;
                     const hijri = data.data.date.hijri;
                     
-                    let day = hijri.day;
-                    if (day === '2') day = '1';
-                    const formattedDay = day.padStart(2, '0');
+                    const day = hijri.day;
+                    const hijriDay = parseInt(day);
+                    
+                    let displayDay = hijriDay;
+                    if (hijriDay > 1) {
+                        displayDay = hijriDay - 1;
+                    }
+                    
+                    currentDay = displayDay;
+                    
+                    const formattedDay = displayDay.toString().padStart(2, '0');
                     const month = 'Ramazan';
                     const year = hijri.year;
                     const hijriDateStr = `${formattedDay} ${month} ${year}`;
@@ -1153,12 +1237,17 @@
                         { name: 'Sabah', time: timings.Fajr },
                         { name: 'Dreka', time: timings.Dhuhr },
                         { name: 'Ikindia', time: timings.Asr },
-                        { name: 'Aksham', time: timings.Maghrib },
+                        { name: 'Akshami', time: timings.Maghrib },
                         { name: 'Jacia', time: timings.Isha }
                     ];
                     sunriseTimeStr = timings.Sunrise;
+                    
                     document.getElementById('hijriDate').innerText = hijriDateStr;
                     document.getElementById('sunriseTime').innerText = sunriseTimeStr;
+                    document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
+                    
+                    loadDayData(currentDay);
+                    
                     updatePrayerCard();
                 })
                 .catch(error => {
@@ -1195,6 +1284,9 @@
             sunriseTimeStr = '06:48';
             document.getElementById('sunriseTime').innerText = sunriseTimeStr;
             document.getElementById('hijriDate').innerText = '01 Ramazan 1447';
+            currentDay = 1;
+            document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
+            loadDayData(currentDay);
             updatePrayerCard();
         }
 
