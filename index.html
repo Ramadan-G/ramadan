@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        /* ========== STILET E FJALA KRYESORE ========== */
         * {
             margin: 0;
             padding: 0;
@@ -396,7 +397,6 @@
             font-family: 'Amiri', serif;
         }
 
-        /* Stili për lutjet */
         .dhikr-list {
             max-height: 500px;
             overflow-y: auto;
@@ -590,6 +590,134 @@
             margin-top: 16px;
             font-family: 'Amiri', serif;
         }
+
+        /* Chat floating */
+        .chat-float-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #e6b17e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(230,177,126,0.5);
+            cursor: pointer;
+            z-index: 999;
+            transition: 0.2s;
+            border: 2px solid white;
+        }
+        .chat-float-btn:active { transform: scale(0.95); }
+        .chat-float-btn span { font-size: 2rem; }
+
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 340px;
+            max-width: calc(100vw - 40px);
+            height: 500px;
+            max-height: 70vh;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 1000;
+            border: 1px solid #f5e1d4;
+            transition: 0.2s;
+            font-family: 'Poppins', sans-serif;
+        }
+        .chat-window.hidden { display: none; }
+        .chat-header-bot {
+            background: #e6b17e;
+            padding: 14px 18px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .chat-header-bot h3 {
+            font-family: 'Amiri', serif;
+            font-size: 1.2rem;
+        }
+        .close-chat {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: white;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            background: #fefaf5;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .chat-input-area {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #f5e1d4;
+            background: white;
+            gap: 8px;
+        }
+        .chat-input-area input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: 40px;
+            border: 1px solid #ecd9c9;
+            outline: none;
+            font-family: inherit;
+        }
+        .chat-input-area button {
+            background: #e6b17e;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+        .bot-msg, .user-msg {
+            max-width: 85%;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+        .bot-msg {
+            background: #fcf3ea;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        .user-msg {
+            background: #e6b17e;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        .chat-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .chat-opt-btn {
+            background: white;
+            border: 1px solid #e6b17e;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: #b35e3a;
+        }
     </style>
 </head>
 <body>
@@ -603,6 +731,7 @@
     </div>
 
     <div class="app" id="mainApp" style="display: none;">
+        <!-- Header -->
         <div class="header">
             <div class="title">
                 <h1>Ramazani 2026/1447</h1>
@@ -617,218 +746,115 @@
             </div>
         </div>
 
+        <!-- Koha e namazeve -->
         <div class="card">
             <div class="card-header"><span>🕋</span> Koha e namazeve</div>
             <div class="location-row">
-                <div class="location-badge" id="locationDisplay">
-                    <span>📍</span> Duke marrë vendndodhjen...
-                </div>
-                <div class="next-badge" id="nextPrayerText">
-                    Sabah për 2h 15m
-                </div>
+                <div class="location-badge" id="locationDisplay"><span>📍</span> Duke marrë vendndodhjen...</div>
+                <div class="next-badge" id="nextPrayerText">Sabah për 2h 15m</div>
             </div>
             <div class="info-row">
-                <div class="info-badge">
-                    🌅 Lindja e djellit: <strong id="sunriseTime">--:--</strong>
-                </div>
-                <div class="info-badge">
-                    📅 <span id="hijriDate">Duke marrë...</span>
-                </div>
+                <div class="info-badge">🌅 Lindja e djellit: <strong id="sunriseTime">--:--</strong></div>
+                <div class="info-badge">📅 <span id="hijriDate">Duke marrë...</span></div>
             </div>
             <div class="prayer-times-grid" id="prayerTimesContainer"></div>
         </div>
 
+        <!-- Namazet farz -->
         <div class="card">
             <div class="card-header"><span>🕋</span> Namazet farz</div>
             <div class="farz-grid">
-                <div class="farz-item">
-                    <input type="checkbox" id="farzSabah" class="farz-checkbox" onchange="saveCurrentDay()">
-                    <span class="name">Sabah</span>
-                </div>
-                <div class="farz-item">
-                    <input type="checkbox" id="farzDreka" class="farz-checkbox" onchange="saveCurrentDay()">
-                    <span class="name">Dreka</span>
-                </div>
-                <div class="farz-item">
-                    <input type="checkbox" id="farzIkindia" class="farz-checkbox" onchange="saveCurrentDay()">
-                    <span class="name">Ikindia</span>
-                </div>
-                <div class="farz-item">
-                    <input type="checkbox" id="farzAksham" class="farz-checkbox" onchange="saveCurrentDay()">
-                    <span class="name">Akshami</span>
-                </div>
-                <div class="farz-item">
-                    <input type="checkbox" id="farzJacia" class="farz-checkbox" onchange="saveCurrentDay()">
-                    <span class="name">Jacia</span>
-                </div>
+                <div class="farz-item"><input type="checkbox" id="farzSabah" onchange="saveCurrentDay()"><span class="name">Sabah</span></div>
+                <div class="farz-item"><input type="checkbox" id="farzDreka" onchange="saveCurrentDay()"><span class="name">Dreka</span></div>
+                <div class="farz-item"><input type="checkbox" id="farzIkindia" onchange="saveCurrentDay()"><span class="name">Ikindia</span></div>
+                <div class="farz-item"><input type="checkbox" id="farzAksham" onchange="saveCurrentDay()"><span class="name">Akshami</span></div>
+                <div class="farz-item"><input type="checkbox" id="farzJacia" onchange="saveCurrentDay()"><span class="name">Jacia</span></div>
             </div>
         </div>
 
+        <!-- Sunetet -->
         <div class="card">
             <div class="card-header"><span>🕌</span> Sunetet</div>
             <div class="sunnah-list">
-                <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahSabah">
-                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('sabah', 'yes')">✓</button>
-                        <button class="choice-btn" data-choice="no" onclick="setSunnah('sabah', 'no')">✗</button>
-                    </div>
-                    <span class="name">Sabah (2 rekate)</span>
-                </div>
-                <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahDreka1">
-                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('dreka1', 'yes')">✓</button>
-                        <button class="choice-btn" data-choice="no" onclick="setSunnah('dreka1', 'no')">✗</button>
-                    </div>
-                    <span class="name">Dreka (4 rekate)</span>
-                </div>
-                <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahDreka2">
-                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('dreka2', 'yes')">✓</button>
-                        <button class="choice-btn" data-choice="no" onclick="setSunnah('dreka2', 'no')">✗</button>
-                    </div>
-                    <span class="name">Dreka (2 rekate)</span>
-                </div>
-                <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahIkindia">
-                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('ikindia', 'yes')">✓</button>
-                        <button class="choice-btn" data-choice="no" onclick="setSunnah('ikindia', 'no')">✗</button>
-                    </div>
-                    <span class="name">Ikindia (4 rekate)</span>
-                </div>
-                <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahAksham">
-                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('aksham', 'yes')">✓</button>
-                        <button class="choice-btn" data-choice="no" onclick="setSunnah('aksham', 'no')">✗</button>
-                    </div>
-                    <span class="name">Akshami (2 rekate)</span>
-                </div>
-                <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahJacia1">
-                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('jacia1', 'yes')">✓</button>
-                        <button class="choice-btn" data-choice="no" onclick="setSunnah('jacia1', 'no')">✗</button>
-                    </div>
-                    <span class="name">Jacia (4 rekate)</span>
-                </div>
-                <div class="sunnah-item">
-                    <div class="control sunnah-choice" id="sunnahJacia2">
-                        <button class="choice-btn" data-choice="yes" onclick="setSunnah('jacia2', 'yes')">✓</button>
-                        <button class="choice-btn" data-choice="no" onclick="setSunnah('jacia2', 'no')">✗</button>
-                    </div>
-                    <span class="name">Jacia (2 rekate)</span>
-                </div>
+                <div class="sunnah-item"><div class="control sunnah-choice" id="sunnahSabah"><button class="choice-btn" data-choice="yes" onclick="setSunnah('sabah', 'yes')">✓</button><button class="choice-btn" data-choice="no" onclick="setSunnah('sabah', 'no')">✗</button></div><span class="name">Sabah (2 rekate)</span></div>
+                <div class="sunnah-item"><div class="control sunnah-choice" id="sunnahDreka1"><button class="choice-btn" data-choice="yes" onclick="setSunnah('dreka1', 'yes')">✓</button><button class="choice-btn" data-choice="no" onclick="setSunnah('dreka1', 'no')">✗</button></div><span class="name">Dreka (4 rekate)</span></div>
+                <div class="sunnah-item"><div class="control sunnah-choice" id="sunnahDreka2"><button class="choice-btn" data-choice="yes" onclick="setSunnah('dreka2', 'yes')">✓</button><button class="choice-btn" data-choice="no" onclick="setSunnah('dreka2', 'no')">✗</button></div><span class="name">Dreka (2 rekate)</span></div>
+                <div class="sunnah-item"><div class="control sunnah-choice" id="sunnahIkindia"><button class="choice-btn" data-choice="yes" onclick="setSunnah('ikindia', 'yes')">✓</button><button class="choice-btn" data-choice="no" onclick="setSunnah('ikindia', 'no')">✗</button></div><span class="name">Ikindia (4 rekate)</span></div>
+                <div class="sunnah-item"><div class="control sunnah-choice" id="sunnahAksham"><button class="choice-btn" data-choice="yes" onclick="setSunnah('aksham', 'yes')">✓</button><button class="choice-btn" data-choice="no" onclick="setSunnah('aksham', 'no')">✗</button></div><span class="name">Akshami (2 rekate)</span></div>
+                <div class="sunnah-item"><div class="control sunnah-choice" id="sunnahJacia1"><button class="choice-btn" data-choice="yes" onclick="setSunnah('jacia1', 'yes')">✓</button><button class="choice-btn" data-choice="no" onclick="setSunnah('jacia1', 'no')">✗</button></div><span class="name">Jacia (4 rekate)</span></div>
+                <div class="sunnah-item"><div class="control sunnah-choice" id="sunnahJacia2"><button class="choice-btn" data-choice="yes" onclick="setSunnah('jacia2', 'yes')">✓</button><button class="choice-btn" data-choice="no" onclick="setSunnah('jacia2', 'no')">✗</button></div><span class="name">Jacia (2 rekate)</span></div>
             </div>
         </div>
 
+        <!-- Namazet vullnetare -->
         <div class="card">
             <div class="card-header"><span>🕌</span> Namazet vullnetare</div>
-            <div class="rakat-selector">
-                <span class="rakat-label">Duha</span>
-                <div class="rakat-controls">
-                    <button class="rakat-btn" onclick="changeRakat('duha', -2)">−</button>
-                    <span class="rakat-num" id="duhaRakat">0</span>
-                    <button class="rakat-btn" onclick="changeRakat('duha', 2)">+</button>
-                </div>
-            </div>
-            <div class="rakat-selector">
-                <span class="rakat-label">Nafile</span>
-                <div class="rakat-controls">
-                    <button class="rakat-btn" onclick="changeRakat('nafile', -2)">−</button>
-                    <span class="rakat-num" id="nafileRakat">0</span>
-                    <button class="rakat-btn" onclick="changeRakat('nafile', 2)">+</button>
-                </div>
-            </div>
-            <div class="rakat-selector">
-                <span class="rakat-label">Tehexhud-i nates</span>
-                <div class="rakat-controls">
-                    <button class="rakat-btn" onclick="changeRakat('nate', -2)">−</button>
-                    <span class="rakat-num" id="nateRakat">0</span>
-                    <button class="rakat-btn" onclick="changeRakat('nate', 2)">+</button>
-                </div>
-            </div>
-            <div class="rakat-selector">
-                <span class="rakat-label">Teravite</span>
-                <div class="rakat-controls">
-                    <button class="rakat-btn" onclick="changeRakat('teravi', -2)">−</button>
-                    <span class="rakat-num" id="teraviRakat">0</span>
-                    <button class="rakat-btn" onclick="changeRakat('teravi', 2)">+</button>
-                </div>
-            </div>
+            <div class="rakat-selector"><span class="rakat-label">Duha</span><div class="rakat-controls"><button class="rakat-btn" onclick="changeRakat('duha', -2)">−</button><span class="rakat-num" id="duhaRakat">0</span><button class="rakat-btn" onclick="changeRakat('duha', 2)">+</button></div></div>
+            <div class="rakat-selector"><span class="rakat-label">Nafile</span><div class="rakat-controls"><button class="rakat-btn" onclick="changeRakat('nafile', -2)">−</button><span class="rakat-num" id="nafileRakat">0</span><button class="rakat-btn" onclick="changeRakat('nafile', 2)">+</button></div></div>
+            <div class="rakat-selector"><span class="rakat-label">Tehexhud-i nates</span><div class="rakat-controls"><button class="rakat-btn" onclick="changeRakat('nate', -2)">−</button><span class="rakat-num" id="nateRakat">0</span><button class="rakat-btn" onclick="changeRakat('nate', 2)">+</button></div></div>
+            <div class="rakat-selector"><span class="rakat-label">Teravite</span><div class="rakat-controls"><button class="rakat-btn" onclick="changeRakat('teravi', -2)">−</button><span class="rakat-num" id="teraviRakat">0</span><button class="rakat-btn" onclick="changeRakat('teravi', 2)">+</button></div></div>
         </div>
 
-        <!-- LUTJET -->
+        <!-- Lutjet (Dhikr) -->
         <div class="card">
             <div class="card-header"><span>📿</span> Lutjet (Dhikr)</div>
             <div class="dhikr-list" id="dhikrContainer"></div>
             <button class="save-btn" style="margin-top: 20px;" onclick="resetAllDhikr()">Rivendos të gjitha në 0</button>
         </div>
 
+        <!-- Kur'ani -->
         <div class="card">
             <div class="card-header"><span>📖</span> Kur'ani (faqe)</div>
-            <div class="page-input-group">
-                <label>Nga:</label>
-                <input type="number" id="fromPage" value="1" min="1" max="604" onchange="saveCurrentDay()">
-                <label>në:</label>
-                <input type="number" id="toPage" value="1" min="1" max="604" onchange="saveCurrentDay()">
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight:500;">Sot: <span id="todayPages">0</span> faqe</span>
-                <button class="save-btn" style="width:auto; padding:12px 24px;" onclick="calculatePages()">Ruaj</button>
-            </div>
-            <div style="margin-top: 24px;">
-                <span>Gjithsej në muaj: <span id="totalPagesRead">0</span> / 604 faqe</span>
-                <div class="progress-bg"><div class="progress-fill" id="quranProgress" style="width:0%"></div></div>
-            </div>
+            <div class="page-input-group"><label>Nga:</label><input type="number" id="fromPage" value="1" min="1" max="604" onchange="saveCurrentDay()"><label>në:</label><input type="number" id="toPage" value="1" min="1" max="604" onchange="saveCurrentDay()"></div>
+            <div style="display: flex; justify-content: space-between;"><span style="font-weight:500;">Sot: <span id="todayPages">0</span> faqe</span><button class="save-btn" style="width:auto; padding:12px 24px;" onclick="calculatePages()">Ruaj</button></div>
+            <div style="margin-top: 24px;"><span>Gjithsej në muaj: <span id="totalPagesRead">0</span> / 604 faqe</span><div class="progress-bg"><div class="progress-fill" id="quranProgress" style="width:0%"></div></div></div>
         </div>
 
+        <!-- Dua dhe reflektim -->
         <div class="card">
             <div class="card-header"><span>🤲</span> Dua dhe reflektim</div>
-            <div class="field">
-                <label>Nje Hadith ne ditë</label>
-                <textarea id="hadith" rows="2" placeholder="Atij që agjëron një ditë në rrugën e Allahut, Allahu do t’ia largojë fytyrën nga Zjarri për shtatëdhjetë vjet." onchange="saveCurrentDay()"></textarea>
-            </div>
-            <div class="field">
-                <label>Dua (lutja e ditës)</label>
-                <textarea id="dua" rows="2" placeholder="O Allah, më jep forcë dhe durim..." onchange="saveCurrentDay()"></textarea>
-            </div>
-            <div class="field">
-                <label>Sadaka (€)</label>
-                <input type="number" id="sadaka" value="0" min="0" step="0.5" placeholder="Shuma e dhënë" onchange="saveCurrentDay()">
-            </div>
-            <div class="field">
-                <label>Reflektimi ditor</label>
-                <textarea id="reflection" rows="3" placeholder="Si u ndjeva sot? Çfarë mund të përmirësoj?" onchange="saveCurrentDay()"></textarea>
-            </div>
+            <div class="field"><label>Nje Hadith ne ditë</label><textarea id="hadith" rows="2" placeholder="Atij që agjëron një ditë në rrugën e Allahut..." onchange="saveCurrentDay()"></textarea></div>
+            <div class="field"><label>Dua (lutja e ditës)</label><textarea id="dua" rows="2" placeholder="O Allah, më jep forcë..." onchange="saveCurrentDay()"></textarea></div>
+            <div class="field"><label>Sadaka (€)</label><input type="number" id="sadaka" value="0" step="0.5" onchange="saveCurrentDay()"></div>
+            <div class="field"><label>Reflektimi ditor</label><textarea id="reflection" rows="3" placeholder="Si u ndjeva sot?" onchange="saveCurrentDay()"></textarea></div>
             <button class="save-btn" onclick="saveCurrentDay()">Ruaj të dhënat</button>
         </div>
 
+        <!-- Reklama -->
         <div class="card ad-card">
             <img src="https://i.postimg.cc/FKDPHG2b/IMG-20260219-WA0000.jpg" alt="Hurme Sukeri" style="width:100%; border-radius:24px; margin-bottom:16px; border:2px solid #e6b17e;">
             <div class="ad-title">Hurme Sukeri</div>
             <div class="ad-subtitle">Shije që nuk harrohet!</div>
-            <div class="ad-description">
-                Të ëmbla, të buta dhe super të freskëta.<br>
-                Perfekte për familje, mysafirë dhe çdo tryezë.
-            </div>
-            <div class="ad-contact">
-                <p style="font-weight:600;">Shesim me shumicë & pakicë</p>
-                <p><strong>Porosit tani:</strong></p>
-                <p class="ad-phone">📞 045 669 151</p>
-                <p class="ad-phone">📞 045 921 578</p>
-            </div>
+            <div class="ad-description">Të ëmbla, të buta dhe super të freskëta.<br>Perfekte për familje, mysafirë dhe çdo tryezë.</div>
+            <div class="ad-contact"><p style="font-weight:600;">Shesim me shumicë & pakicë</p><p><strong>Porosit tani:</strong></p><p class="ad-phone">📞 045 669 151</p><p class="ad-phone">📞 045 921 578</p></div>
             <div class="ad-weight">3 Kg</div>
-            <div class="ad-social">
-                Na shkruani në Viber, WhatsApp, Instagram & Facebook.
-            </div>
-            <div class="ad-footer">
-                HURME TAZE
-            </div>
+            <div class="ad-social">Na shkruani në Viber, WhatsApp, Instagram & Facebook.</div>
+            <div class="ad-footer">HURME TAZE</div>
             <p style="color:#8b6250; margin-top:8px;">Cilësi, freski dhe besim!</p>
         </div>
-
         <div class="footer">🌙 Çdo ditë është mundësi</div>
     </div>
 
+    <!-- Floating Chatbot -->
+    <div class="chat-float-btn" id="chatFloatBtn">
+        <span>💬</span>
+    </div>
+    <div class="chat-window hidden" id="chatWindow">
+        <div class="chat-header-bot">
+            <h3>📚 Testi i dijes islame</h3>
+            <button class="close-chat" id="closeChatBtn">✕</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="bot-msg">👋 Përshëndetje! Si të quajnë?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Shkruaj përgjigjen...">
+            <button id="chatSendBtn">➤</button>
+        </div>
+    </div>
+
     <script>
+        // ==================== KODI I FJALA KRYESORE (Ramadan) ====================
         const dhikrList = [
             { name: "Subhanallah (100x)", arabic: "سُبْحَانَ اللَّهِ" },
             { name: "Elhamdulilah (100x)", arabic: "الْحَمْدُ لِلَّهِ" },
@@ -840,12 +866,12 @@
             { name: "HasbijAllahu ve ni’mel vekil", arabic: "حَسْبِيَ اللَّهُ وَنِعْمَ الْوَكِيلُ" },
             { name: "La hawle ve la kuvvete illa billah", arabic: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ" },
             { name: "Salavatet", arabic: "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ" },
-            { name: "La ilahe illallah wahdehu la sherike leh, lehul mulku we lehul hamdu we huwe ala kuli shejin kadir", arabic: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ" },
+            { name: "La ilahe illallah wahdehu la sherike leh...", arabic: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ..." },
             { name: "Estagfirullah ve etubu ilejh", arabic: "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ" },
-            { name: "Allahumme inni es’eluke’l xhenneh we eudhu bike mine nar (7x)", arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ" },
+            { name: "Allahumme inni es’eluke’l xhenneh... (7x)", arabic: "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ..." },
             { name: "Ihlas 13her", arabic: "قُلْ هُوَ اللَّهُ أَحَدٌ" },
-            { name: "La ilahe illa ente subhaneke inni kuntu mine dhalimin", arabic: "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ" },
-            { name: "Hasbijallahu la ilahe ila huve, alejhi tevekeltu ve huve rabbul arshil adhim", arabic: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ" }
+            { name: "La ilahe illa ente subhaneke...", arabic: "لَا إِلَهَ إِلَّا أَنْتَ سُبْحَانَكَ..." },
+            { name: "Hasbijallahu la ilahe ila huve...", arabic: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ..." }
         ];
 
         let currentDay = 1;
@@ -855,453 +881,190 @@
         let sunriseTimeStr = '--:--';
         let dayData = {};
 
-        window.onload = function() {
-            renderDhikr();
-            setupSunnahChoices();
-            document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
-            const savedUser = localStorage.getItem('ramadanUser');
-            if (savedUser) {
-                userName = savedUser;
-                document.getElementById('userGreeting').innerText = `👤 ${userName}`;
-                document.getElementById('loginOverlay').style.display = 'none';
-                document.getElementById('mainApp').style.display = 'block';
-                loadAllData();
-                getLocation();
-            }
-            setInterval(updatePrayerCard, 60000);
-        };
-
         function saveUsername() {
-            const input = document.getElementById('usernameInput');
-            const name = input.value.trim();
+            const name = document.getElementById('usernameInput').value.trim();
             if (name) {
                 userName = name;
-                document.getElementById('userGreeting').innerText = `👤 ${name}`;
+                document.getElementById('userGreeting').innerText = `👤 ${userName}`;
                 document.getElementById('loginOverlay').style.display = 'none';
                 document.getElementById('mainApp').style.display = 'block';
                 localStorage.setItem('ramadanUser', name);
                 loadAllData();
                 getLocation();
-            } else {
-                alert('Ju lutem shkruani emrin tuaj');
+            } else alert('Ju lutem shkruani emrin tuaj');
+        }
+        function loadAllData() { const stored = localStorage.getItem(`ramadanData_${userName}`); if(stored) dayData = JSON.parse(stored); else dayData = {}; loadDayData(currentDay); updateQuranTotal(); }
+        function saveAllData() { localStorage.setItem(`ramadanData_${userName}`, JSON.stringify(dayData)); }
+        function createEmptyDayData() { return { farz: { sabah:false,dreka:false,ikindia:false,aksham:false,jacia:false }, sunnah: { sabah:'no',dreka1:'no',dreka2:'no',ikindia:'no',aksham:'no',jacia1:'no',jacia2:'no' }, voluntary: { duha:0, nafile:0, nate:0, teravi:0 }, dhikr: { checked: new Array(16).fill(false), counts: new Array(16).fill(0) }, quran: { fromPage:1, toPage:1 }, duaReflection: { dua:'', sadaka:0, reflection:'' }, hadithReflection: { hadith:'' } }; }
+        function setSunnahChoice(containerId, val) { let c = document.getElementById(containerId); if(!c) return; let btns = c.querySelectorAll('.choice-btn'); btns.forEach(b=>{ b.classList.remove('active-yes','active-no'); if(b.dataset.choice === val) b.classList.add(val==='yes'?'active-yes':'active-no'); }); }
+        function setSunnah(prayer,val) { setSunnahChoice('sunnah'+prayer.charAt(0).toUpperCase()+prayer.slice(1), val); saveCurrentDay(); }
+        function getSunnahChoice(containerId){ let c=document.getElementById(containerId); if(!c) return 'no'; return c.querySelector('.active-yes') ? 'yes' : 'no'; }
+        function loadDayData(day) { let d = dayData[day] || createEmptyDayData(); document.getElementById('farzSabah').checked = d.farz.sabah; document.getElementById('farzDreka').checked = d.farz.dreka; document.getElementById('farzIkindia').checked = d.farz.ikindia; document.getElementById('farzAksham').checked = d.farz.aksham; document.getElementById('farzJacia').checked = d.farz.jacia; setSunnahChoice('sunnahSabah',d.sunnah.sabah); setSunnahChoice('sunnahDreka1',d.sunnah.dreka1); setSunnahChoice('sunnahDreka2',d.sunnah.dreka2); setSunnahChoice('sunnahIkindia',d.sunnah.ikindia); setSunnahChoice('sunnahAksham',d.sunnah.aksham); setSunnahChoice('sunnahJacia1',d.sunnah.jacia1); setSunnahChoice('sunnahJacia2',d.sunnah.jacia2); document.getElementById('duhaRakat').innerText = d.voluntary.duha; document.getElementById('nafileRakat').innerText = d.voluntary.nafile; document.getElementById('nateRakat').innerText = d.voluntary.nate; document.getElementById('teraviRakat').innerText = d.voluntary.teravi; for(let i=0;i<dhikrList.length;i++){ let ch=document.getElementById(`dhikr-check-${i}`); let num=document.getElementById(`dhikr-number-${i}`); if(ch) ch.checked = d.dhikr.checked[i]; if(num) num.innerText = d.dhikr.counts[i]; } document.getElementById('fromPage').value = d.quran.fromPage; document.getElementById('toPage').value = d.quran.toPage; document.getElementById('hadith').value = d.hadithReflection?.hadith||''; document.getElementById('dua').value = d.duaReflection.dua||''; document.getElementById('sadaka').value = d.duaReflection.sadaka||0; document.getElementById('reflection').value = d.duaReflection.reflection||''; calculatePages(); }
+        function saveCurrentDay() { let data = { farz:{ sabah:document.getElementById('farzSabah').checked, dreka:document.getElementById('farzDreka').checked, ikindia:document.getElementById('farzIkindia').checked, aksham:document.getElementById('farzAksham').checked, jacia:document.getElementById('farzJacia').checked }, sunnah:{ sabah:getSunnahChoice('sunnahSabah'), dreka1:getSunnahChoice('sunnahDreka1'), dreka2:getSunnahChoice('sunnahDreka2'), ikindia:getSunnahChoice('sunnahIkindia'), aksham:getSunnahChoice('sunnahAksham'), jacia1:getSunnahChoice('sunnahJacia1'), jacia2:getSunnahChoice('sunnahJacia2') }, voluntary:{ duha:parseInt(document.getElementById('duhaRakat').innerText)||0, nafile:parseInt(document.getElementById('nafileRakat').innerText)||0, nate:parseInt(document.getElementById('nateRakat').innerText)||0, teravi:parseInt(document.getElementById('teraviRakat').innerText)||0 }, dhikr:{ checked:[], counts:[] }, quran:{ fromPage:parseInt(document.getElementById('fromPage').value)||1, toPage:parseInt(document.getElementById('toPage').value)||1 }, duaReflection:{ dua:document.getElementById('dua').value, sadaka:parseFloat(document.getElementById('sadaka').value)||0, reflection:document.getElementById('reflection').value }, hadithReflection:{ hadith:document.getElementById('hadith').value } }; for(let i=0;i<dhikrList.length;i++){ let ch=document.getElementById(`dhikr-check-${i}`); let num=document.getElementById(`dhikr-number-${i}`); data.dhikr.checked.push(ch?ch.checked:false); data.dhikr.counts.push(parseInt(num?num.innerText:0)||0); } dayData[currentDay]=data; saveAllData(); updateQuranTotal(); }
+        function updateQuranTotal() { let total=0; for(let day=1;day<=30;day++){ let d=dayData[day]; if(d && d.quran && d.quran.toPage && d.quran.fromPage){ let p=d.quran.toPage-d.quran.fromPage; if(p>0) total+=p; } } document.getElementById('totalPagesRead').innerText=total; document.getElementById('quranProgress').style.width = Math.min(100,(total/604)*100)+'%'; }
+        function changeDay(delta){ saveCurrentDay(); currentDay+=delta; if(currentDay<1)currentDay=1; if(currentDay>30)currentDay=30; document.getElementById('currentDay').innerText=`Dita ${currentDay}/30`; loadDayData(currentDay); }
+        function changeRakat(which,delta){ let el=document.getElementById(which+'Rakat'); let val=parseInt(el.innerText)||0; val+=delta; if(val<0)val=0; if(which==='duha' && val>24) val=24; if(which==='teravi' && val>100) val=100; if(which==='nate' && val>20) val=20; if(which==='nafile' && val>100) val=100; el.innerText=val; saveCurrentDay(); }
+        function calculatePages(){ let from=parseInt(document.getElementById('fromPage').value)||1; let to=parseInt(document.getElementById('toPage').value)||1; if(to>=from) document.getElementById('todayPages').innerText=to-from; saveCurrentDay(); }
+        function renderDhikr(){ let container=document.getElementById('dhikrContainer'); container.innerHTML=''; dhikrList.forEach((item,idx)=>{ let div=document.createElement('div'); div.className='dhikr-item'; div.innerHTML=`<input type="checkbox" class="dhikr-checkbox" id="dhikr-check-${idx}" onchange="saveCurrentDay()"><div class="dhikr-content"><div class="dhikr-name-arabic">${item.arabic}</div><div class="dhikr-name">${idx+1}. ${item.name}</div></div><div class="dhikr-number" id="dhikr-number-${idx}" contenteditable="true" onblur="saveCurrentDay()">0</div>`; container.appendChild(div); }); }
+        function resetAllDhikr(){ for(let i=0;i<dhikrList.length;i++){ let ch=document.getElementById(`dhikr-check-${i}`); let num=document.getElementById(`dhikr-number-${i}`); if(ch) ch.checked=false; if(num) num.innerText='0'; } saveCurrentDay(); }
+        function getLocation(){ if(navigator.geolocation){ navigator.geolocation.getCurrentPosition(showPosition,showError,{enableHighAccuracy:true,timeout:10000}); } else { document.getElementById('locationDisplay').innerHTML='📍 Geolokacioni nuk mbështetet'; useFallbackTimes(); } }
+        function showPosition(pos){ userCoords={lat:pos.coords.latitude,lon:pos.coords.longitude}; fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${userCoords.lat}&lon=${userCoords.lon}`).then(r=>r.json()).then(d=>{let city=d.address.city||d.address.town||d.address.village||'vendndodhja juaj'; document.getElementById('locationDisplay').innerHTML=`📍 ${city}`;}).catch(()=>{document.getElementById('locationDisplay').innerHTML='📍 Vendndodhja juaj';}); fetch(`https://api.aladhan.com/v1/timings?latitude=${userCoords.lat}&longitude=${userCoords.lon}&method=3`).then(r=>r.json()).then(d=>{if(d.code!==200) throw 'error'; let timings=d.data.timings; let hijri=d.data.date.hijri; let formatTime=t=>{let m=t.match(/(\d{1,2}):(\d{2})/); return m?`${m[1].padStart(2,'0')}:${m[2]}`:t;}; let apiDay=parseInt(hijri.day); let displayDay=apiDay; currentDay=displayDay; let monthLatin = hijri.month.en; let hijriDateStr = `${displayDay} ${monthLatin} ${hijri.year}`; prayerTimes=[{name:'Sabah',time:formatTime(timings.Fajr)},{name:'Dreka',time:formatTime(timings.Dhuhr)},{name:'Ikindia',time:formatTime(timings.Asr)},{name:'Akshami',time:formatTime(timings.Maghrib)},{name:'Jacia',time:formatTime(timings.Isha)}]; sunriseTimeStr=formatTime(timings.Sunrise); document.getElementById('hijriDate').innerText=hijriDateStr; document.getElementById('sunriseTime').innerText=sunriseTimeStr; document.getElementById('currentDay').innerText=`Dita ${currentDay}/30`; loadDayData(currentDay); updatePrayerCard(); }).catch(e=>{console.error(e); useFallbackTimes();}); }
+        function showError(e){ document.getElementById('locationDisplay').innerHTML='📍 Vendndodhja nuk u gjet, duke përdorur oraret standarde...'; useFallbackTimes(); }
+        function useFallbackTimes(){ prayerTimes=[{name:'Sabah',time:'05:40'},{name:'Dreka',time:'12:43'},{name:'Ikindia',time:'15:19'},{name:'Akshami',time:'17:53'},{name:'Jacia',time:'19:30'}]; sunriseTimeStr='06:48'; document.getElementById('sunriseTime').innerText=sunriseTimeStr; document.getElementById('hijriDate').innerText='1 Ramadan 1447'; currentDay=1; document.getElementById('currentDay').innerText=`Dita ${currentDay}/30`; loadDayData(currentDay); updatePrayerCard(); }
+        function updatePrayerCard(){ if(prayerTimes.length===0) return; let now=new Date().getHours()*60+new Date().getMinutes(); let mins=prayerTimes.map(p=>{let[h,m]=p.time.split(':'); return parseInt(h)*60+parseInt(m);}); let nextIdx=mins.findIndex(t=>t>now); let timeUntil; if(nextIdx===-1){ nextIdx=0; timeUntil=(24*60-now)+mins[0]; } else timeUntil=mins[nextIdx]-now; document.getElementById('nextPrayerText').innerHTML=`${prayerTimes[nextIdx].name} për ${Math.floor(timeUntil/60)}h ${timeUntil%60}m`; let container=document.getElementById('prayerTimesContainer'); container.innerHTML=''; prayerTimes.forEach(p=>{let div=document.createElement('div'); div.className='prayer-time-item'; div.innerHTML=`${p.name}<br><strong>${p.time}</strong>`; container.appendChild(div);}); }
+
+        window.onload = function() { renderDhikr(); document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`; let savedUser = localStorage.getItem('ramadanUser'); if (savedUser) { userName = savedUser; document.getElementById('userGreeting').innerText = `👤 ${userName}`; document.getElementById('loginOverlay').style.display = 'none'; document.getElementById('mainApp').style.display = 'block'; loadAllData(); getLocation(); } setInterval(updatePrayerCard, 60000); };
+
+        // ==================== CHATBOT (Kuiz me 10 pyetje të rastësishme) ====================
+        const allQuestions = [
+            { text: "Cili është muaji i nëntë i kalendarit islam?", options: ["Muharrem", "Ramazan", "Dhul-hixhxhe", "Rabiul-evvel"], correct: "Ramazan" },
+            { text: "Sa janë shtyllat e Islamit?", options: ["3", "4", "5", "6"], correct: "5" },
+            { text: "Cili është libri i shenjtë i Islamit?", options: ["Teurati", "Zeburi", "Inxhili", "Kur'ani"], correct: "Kur'ani" },
+            { text: "Sa rekate ka namazi i Sabahut?", options: ["2", "4", "3", "1"], correct: "2" },
+            { text: "Cili është drejtimi i Kiblës për muslimanët?", options: ["Jerusalemi", "Meka", "Medina", "Kairo"], correct: "Meka" },
+            { text: "Cili është muaji i agjërimit?", options: ["Ramazan", "Sha'ban", "Muharrem", "Rexheb"], correct: "Ramazan" },
+            { text: "Si quhet nata e shenjtë në Ramazan?", options: ["Nata e Kadrit", "Nata e Beratit", "Nata e Miraxhit", "Nata e Xhumasë"], correct: "Nata e Kadrit" },
+            { text: "Cili prej këtyre nuk është emër i Allahut?", options: ["Er-Rahman", "Er-Rrahim", "El-Melik", "El-Firaun"], correct: "El-Firaun" },
+            { text: "Sa rekate ka namazi i Drekes?", options: ["4", "2", "3", "1"], correct: "4" },
+            { text: "Cila është sureja e parë e Kuranit?", options: ["El-Bekare", "El-Ihlas", "El-Fatiha", "En-Nas"], correct: "El-Fatiha" },
+            { text: "Sa vjet i kishte Muhammedi a.s. kur i zbriti shpallja e parë?", options: ["40", "50", "63", "30"], correct: "40" },
+            { text: "Cili është bajrami që vjen pas Ramazanit?", options: ["Fitër Bajrami", "Kurban Bajrami", "Bajrami i Madh", "Bajrami i Pranverës"], correct: "Fitër Bajrami" },
+            { text: "Sa janë rekate e teravive në shumicën e xhamive?", options: ["8", "12", "20", "36"], correct: "20" },
+            { text: "Cili është emri i engjëllit që solli shpalljen?", options: ["Mikail", "Xhebrail", "Israfil", "Azrail"], correct: "Xhebrail" },
+            { text: "Cila është shtylla e dytë e Islamit?", options: ["Agjërimi", "Namazi", "Zeqati", "Haxhi"], correct: "Namazi" },
+            { text: "Ku ndodhet xhamia e shenjtë e Mesxhidul Haraam?", options: ["Medina", "Jerusalem", "Meka", "Bagdad"], correct: "Meka" },
+            { text: "Sa sure ka Kur'ani?", options: ["104", "114", "124", "134"], correct: "114" },
+            { text: "Cili prej këtyre e prish agjërimin?", options: ["Të ngrënit me dashje", "Gjumi", "Larja", "Të folurit"], correct: "Të ngrënit me dashje" },
+            { text: "Cili është muaji i parë i kalendarit islam?", options: ["Muharrem", "Safar", "Ramazan", "Dhul-hixhxhe"], correct: "Muharrem" },
+            { text: "Cila është zeqati e trupit (sadakatul fitr) që jepet në fund të Ramazanit?", options: ["Ushqim", "Para", "Rroba", "Kurban"], correct: "Ushqim" }
+        ];
+
+        const CHAT_QUESTIONS_PER_QUIZ = 10;
+        let chatStep = 0, chatUserName = '', currentQuizQuestions = [], currentQuestionIndex = 0, quizScore = 0, waitingForAnswer = false;
+
+        function getRandomQuestions(count) {
+            const shuffled = [...allQuestions];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
             }
+            return shuffled.slice(0, Math.min(count, shuffled.length));
         }
 
-        function loadAllData() {
-            const stored = localStorage.getItem(`ramadanData_${userName}`);
-            if (stored) {
-                dayData = JSON.parse(stored);
-            } else {
-                dayData = {};
-            }
-            loadDayData(currentDay);
-            updateQuranTotal();
-        }
-
-        function saveAllData() {
-            localStorage.setItem(`ramadanData_${userName}`, JSON.stringify(dayData));
-        }
-
-        function loadDayData(day) {
-            const data = dayData[day] || createEmptyDayData();
-            
-            document.getElementById('farzSabah').checked = data.farz.sabah;
-            document.getElementById('farzDreka').checked = data.farz.dreka;
-            document.getElementById('farzIkindia').checked = data.farz.ikindia;
-            document.getElementById('farzAksham').checked = data.farz.aksham;
-            document.getElementById('farzJacia').checked = data.farz.jacia;
-
-            setSunnahChoice('sunnahSabah', data.sunnah.sabah);
-            setSunnahChoice('sunnahDreka1', data.sunnah.dreka1);
-            setSunnahChoice('sunnahDreka2', data.sunnah.dreka2);
-            setSunnahChoice('sunnahIkindia', data.sunnah.ikindia);
-            setSunnahChoice('sunnahAksham', data.sunnah.aksham);
-            setSunnahChoice('sunnahJacia1', data.sunnah.jacia1);
-            setSunnahChoice('sunnahJacia2', data.sunnah.jacia2);
-
-            document.getElementById('duhaRakat').innerText = data.voluntary.duha;
-            document.getElementById('nafileRakat').innerText = data.voluntary.nafile;
-            document.getElementById('nateRakat').innerText = data.voluntary.nate;
-            document.getElementById('teraviRakat').innerText = data.voluntary.teravi;
-
-            for (let i = 0; i < dhikrList.length; i++) {
-                const checkbox = document.getElementById(`dhikr-check-${i}`);
-                const numberDiv = document.getElementById(`dhikr-number-${i}`);
-                if (checkbox) checkbox.checked = data.dhikr.checked[i] || false;
-                if (numberDiv) numberDiv.innerText = data.dhikr.counts[i] || 0;
-            }
-
-            document.getElementById('fromPage').value = data.quran.fromPage;
-            document.getElementById('toPage').value = data.quran.toPage;
-            
-            document.getElementById('hadith').value = data.hadithReflection?.hadith || '';
-            document.getElementById('dua').value = data.duaReflection.dua || '';
-            document.getElementById('sadaka').value = data.duaReflection.sadaka || 0;
-            document.getElementById('reflection').value = data.duaReflection.reflection || '';
-            
-            calculatePages();
-        }
-
-        function createEmptyDayData() {
-            return {
-                farz: { sabah: false, dreka: false, ikindia: false, aksham: false, jacia: false },
-                sunnah: { 
-                    sabah: 'no', 
-                    dreka1: 'no', 
-                    dreka2: 'no', 
-                    ikindia: 'no', 
-                    aksham: 'no', 
-                    jacia1: 'no', 
-                    jacia2: 'no' 
-                },
-                voluntary: { duha: 0, nafile: 0, nate: 0, teravi: 0 },
-                dhikr: {
-                    checked: new Array(16).fill(false),
-                    counts: new Array(16).fill(0)
-                },
-                quran: { fromPage: 1, toPage: 1 },
-                duaReflection: { dua: '', sadaka: 0, reflection: '' },
-                hadithReflection: { hadith: '' }
-            };
-        }
-
-        function setSunnahChoice(containerId, value) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const btns = container.querySelectorAll('.choice-btn');
-            btns.forEach(btn => {
-                btn.classList.remove('active-yes', 'active-no');
-                if (btn.dataset.choice === value) {
-                    btn.classList.add(value === 'yes' ? 'active-yes' : 'active-no');
-                }
-            });
-        }
-
-        function setSunnah(prayer, value) {
-            const containerId = 'sunnah' + prayer.charAt(0).toUpperCase() + prayer.slice(1);
-            setSunnahChoice(containerId, value);
-            saveCurrentDay();
-        }
-
-        function saveCurrentDay() {
-            const data = {
-                farz: {
-                    sabah: document.getElementById('farzSabah').checked,
-                    dreka: document.getElementById('farzDreka').checked,
-                    ikindia: document.getElementById('farzIkindia').checked,
-                    aksham: document.getElementById('farzAksham').checked,
-                    jacia: document.getElementById('farzJacia').checked
-                },
-                sunnah: {
-                    sabah: getSunnahChoice('sunnahSabah'),
-                    dreka1: getSunnahChoice('sunnahDreka1'),
-                    dreka2: getSunnahChoice('sunnahDreka2'),
-                    ikindia: getSunnahChoice('sunnahIkindia'),
-                    aksham: getSunnahChoice('sunnahAksham'),
-                    jacia1: getSunnahChoice('sunnahJacia1'),
-                    jacia2: getSunnahChoice('sunnahJacia2')
-                },
-                voluntary: {
-                    duha: parseInt(document.getElementById('duhaRakat').innerText) || 0,
-                    nafile: parseInt(document.getElementById('nafileRakat').innerText) || 0,
-                    nate: parseInt(document.getElementById('nateRakat').innerText) || 0,
-                    teravi: parseInt(document.getElementById('teraviRakat').innerText) || 0
-                },
-                dhikr: {
-                    checked: [],
-                    counts: []
-                },
-                quran: {
-                    fromPage: parseInt(document.getElementById('fromPage').value) || 1,
-                    toPage: parseInt(document.getElementById('toPage').value) || 1
-                },
-                duaReflection: {
-                    dua: document.getElementById('dua').value,
-                    sadaka: parseFloat(document.getElementById('sadaka').value) || 0,
-                    reflection: document.getElementById('reflection').value
-                },
-                hadithReflection: {
-                    hadith: document.getElementById('hadith').value
-                }
-            };
-
-            for (let i = 0; i < dhikrList.length; i++) {
-                const checkbox = document.getElementById(`dhikr-check-${i}`);
-                const numberDiv = document.getElementById(`dhikr-number-${i}`);
-                data.dhikr.checked.push(checkbox ? checkbox.checked : false);
-                data.dhikr.counts.push(parseInt(numberDiv.innerText) || 0);
-            }
-
-            dayData[currentDay] = data;
-            saveAllData();
-            updateQuranTotal();
-        }
-
-        function getSunnahChoice(containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return 'no';
-            const activeYes = container.querySelector('.choice-btn.active-yes');
-            return activeYes ? 'yes' : 'no';
-        }
-
-        function updateQuranTotal() {
-            let total = 0;
-            for (let day = 1; day <= 30; day++) {
-                const d = dayData[day];
-                if (d && d.quran && d.quran.toPage && d.quran.fromPage) {
-                    const pages = d.quran.toPage - d.quran.fromPage;
-                    if (pages > 0) total += pages;
-                }
-            }
-            document.getElementById('totalPagesRead').innerText = total;
-            const percent = Math.min(100, (total / 604) * 100);
-            document.getElementById('quranProgress').style.width = percent + '%';
-        }
-
-        function changeDay(delta) {
-            saveCurrentDay();
-            currentDay += delta;
-            if (currentDay < 1) currentDay = 1;
-            if (currentDay > 30) currentDay = 30;
-            document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
-            loadDayData(currentDay);
-        }
-
-        function changeRakat(which, delta) {
-            const el = document.getElementById(which + 'Rakat');
-            let val = parseInt(el.innerText) || 0;
-            val += delta;
-            if (val < 0) val = 0;
-            if (which === 'duha' && val > 24) val = 24;
-            if (which === 'teravi' && val > 100) val = 100;
-            if (which === 'nate' && val > 20) val = 20;
-            if (which === 'nafile' && val > 100) val = 100;
-            el.innerText = val;
-            saveCurrentDay();
-        }
-
-        function calculatePages() {
-            const from = parseInt(document.getElementById('fromPage').value) || 1;
-            const to = parseInt(document.getElementById('toPage').value) || 1;
-            if (to >= from) {
-                document.getElementById('todayPages').innerText = to - from;
-            }
-            saveCurrentDay();
-        }
-
-        function renderDhikr() {
-            const container = document.getElementById('dhikrContainer');
-            container.innerHTML = '';
-            dhikrList.forEach((item, index) => {
-                const dhikrItem = document.createElement('div');
-                dhikrItem.className = 'dhikr-item';
-                dhikrItem.innerHTML = `
-                    <input type="checkbox" class="dhikr-checkbox" id="dhikr-check-${index}" onchange="saveCurrentDay()">
-                    <div class="dhikr-content">
-                        <div class="dhikr-name-arabic">${item.arabic}</div>
-                        <div class="dhikr-name">${index+1}. ${item.name}</div>
-                    </div>
-                    <div class="dhikr-number" id="dhikr-number-${index}" contenteditable="true" onblur="saveCurrentDay()">0</div>
-                `;
-                container.appendChild(dhikrItem);
-            });
-        }
-
-        function resetAllDhikr() {
-            for (let i = 0; i < dhikrList.length; i++) {
-                const checkbox = document.getElementById(`dhikr-check-${i}`);
-                const numberDiv = document.getElementById(`dhikr-number-${i}`);
-                if (checkbox) checkbox.checked = false;
-                if (numberDiv) numberDiv.innerText = '0';
-            }
-            saveCurrentDay();
-        }
-
-        function setupSunnahChoices() {
-            const choiceContainers = document.querySelectorAll('.sunnah-choice');
-            choiceContainers.forEach(container => {
-                const btns = container.querySelectorAll('.choice-btn');
-                btns.forEach(btn => {
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        btns.forEach(b => {
-                            b.classList.remove('active-yes', 'active-no');
-                        });
-                        if (this.dataset.choice === 'yes') {
-                            this.classList.add('active-yes');
-                        } else {
-                            this.classList.add('active-no');
-                        }
-                        saveCurrentDay();
-                    });
-                });
-            });
-        }
-
-        function getLocation() {
-            if (navigator.geolocation) {
-                const timeoutId = setTimeout(() => {
-                    showError({ code: 3, message: 'Timeout' });
-                }, 10000);
-                
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        clearTimeout(timeoutId);
-                        showPosition(position);
-                    },
-                    showError,
-                    { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-                );
-            } else {
-                document.getElementById('locationDisplay').innerHTML = '📍 Geolokacioni nuk mbështetet';
-                useFallbackTimes();
-            }
-        }
-
-        function showPosition(position) {
-            userCoords = {
-                lat: position.coords.latitude,
-                lon: position.coords.longitude
-            };
-            
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${userCoords.lat}&lon=${userCoords.lon}`)
-                .then(response => response.json())
-                .then(data => {
-                    const city = data.address.city || data.address.town || data.address.village || data.address.county || 'vendndodhja juaj';
-                    document.getElementById('locationDisplay').innerHTML = `📍 ${city}`;
-                })
-                .catch(() => {
-                    document.getElementById('locationDisplay').innerHTML = '📍 Vendndodhja juaj';
-                });
-
-            fetch(`https://api.aladhan.com/v1/timings?latitude=${userCoords.lat}&longitude=${userCoords.lon}&method=3`)
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.code !== 200) throw new Error('API returned error');
-                    
-                    const timings = data.data.timings;
-                    const hijri = data.data.date.hijri;
-                    
-                    const formatTime = (timeStr) => {
-                        const match = timeStr.match(/(\d{1,2}):(\d{2})/);
-                        return match ? `${match[1].padStart(2, '0')}:${match[2]}` : timeStr;
+        function addChatMessage(text, isUser = false, options = null) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = isUser ? 'user-msg' : 'bot-msg';
+            msgDiv.innerText = text;
+            chatMessagesDiv.appendChild(msgDiv);
+            // Butonat shfaqen vetëm nëse ka opsione dhe nuk është mesazh përdoruesi
+            if (options && !isUser) {
+                const optsDiv = document.createElement('div');
+                optsDiv.className = 'chat-options';
+                options.forEach(opt => {
+                    const btn = document.createElement('button');
+                    btn.className = 'chat-opt-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => {
+                        if (waitingForAnswer) return;
+                        addChatMessage(opt, true);
+                        handleQuizAnswer(opt);
                     };
-                    
-                    // Dita reale nga API
-                    const apiDay = parseInt(hijri.day);
-                    // Dita që do të shfaqim në UI (minus 1, por jo më pak se 1)
-                    const displayDay = apiDay > 1 ? apiDay - 1 : 1;
-                    currentDay = displayDay;
-                    
-                    const month = 'Ramazan';
-                    const year = hijri.year;
-                    // Data hixhri e shfaqur përdor displayDay (të njëjtën si currentDay)
-                    const hijriDateStr = `${displayDay.toString().padStart(2, '0')} ${month} ${year}`;
-                    
-                    prayerTimes = [
-                        { name: 'Sabah', time: formatTime(timings.Fajr) },
-                        { name: 'Dreka', time: formatTime(timings.Dhuhr) },
-                        { name: 'Ikindia', time: formatTime(timings.Asr) },
-                        { name: 'Akshami', time: formatTime(timings.Maghrib) },
-                        { name: 'Jacia', time: formatTime(timings.Isha) }
-                    ];
-                    
-                    sunriseTimeStr = formatTime(timings.Sunrise);
-                    
-                    document.getElementById('hijriDate').innerText = hijriDateStr;
-                    document.getElementById('sunriseTime').innerText = sunriseTimeStr;
-                    document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
-                    
-                    loadDayData(currentDay);
-                    updatePrayerCard();
-                })
-                .catch(error => {
-                    console.error('Error fetching prayer times:', error);
-                    useFallbackTimes();
+                    optsDiv.appendChild(btn);
                 });
+                chatMessagesDiv.appendChild(optsDiv);
+            }
+            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
         }
 
-        function showError(error) {
-            console.warn('Geolocation error:', error);
-            document.getElementById('locationDisplay').innerHTML = '📍 Vendndodhja nuk u gjet, duke përdorur oraret standarde...';
-            useFallbackTimes();
-        }
-
-        function useFallbackTimes() {
-            prayerTimes = [
-                { name: 'Sabah', time: '05:40' },
-                { name: 'Dreka', time: '12:43' },
-                { name: 'Ikindia', time: '15:19' },
-                { name: 'Akshami', time: '17:53' },
-                { name: 'Jacia', time: '19:30' }
-            ];
-            sunriseTimeStr = '06:48';
-            document.getElementById('sunriseTime').innerText = sunriseTimeStr;
-            document.getElementById('hijriDate').innerText = '01 Ramazan 1447';
-            currentDay = 1;
-            document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`;
-            loadDayData(currentDay);
-            updatePrayerCard();
-        }
-
-        function updatePrayerCard() {
-            if (prayerTimes.length === 0) return;
-            
-            try {
-                const now = getCurrentMinutes();
-                const prayerMins = prayerTimes.map(p => {
-                    const t = timeToMinutes(p.time);
-                    return isNaN(t) ? 0 : t;
-                });
-                
-                let nextIndex = prayerMins.findIndex(t => t > now);
-                let timeUntil;
-                if (nextIndex === -1) {
-                    nextIndex = 0;
-                    timeUntil = (24 * 60 - now) + prayerMins[0];
-                } else {
-                    timeUntil = prayerMins[nextIndex] - now;
-                }
-                
-                const nextPrayer = prayerTimes[nextIndex];
-                document.getElementById('nextPrayerText').innerHTML = `${nextPrayer.name} për ${formatDuration(timeUntil)}`;
-
-                const container = document.getElementById('prayerTimesContainer');
-                container.innerHTML = '';
-                prayerTimes.forEach(p => {
-                    const div = document.createElement('div');
-                    div.className = 'prayer-time-item';
-                    div.innerHTML = `${p.name}<br><strong>${p.time}</strong>`;
-                    container.appendChild(div);
-                });
-            } catch (e) {
-                console.error('Error updating prayer card:', e);
+        function handleQuizAnswer(answer) {
+            if (!waitingForAnswer) return;
+            const currentQ = currentQuizQuestions[currentQuestionIndex];
+            if (answer === currentQ.correct) quizScore++;
+            currentQuestionIndex++;
+            if (currentQuestionIndex < currentQuizQuestions.length) {
+                askNextQuestion();
+            } else {
+                endQuiz();
             }
         }
 
-        function getCurrentMinutes() {
-            const now = new Date();
-            return now.getHours() * 60 + now.getMinutes();
+        function askNextQuestion() {
+            const q = currentQuizQuestions[currentQuestionIndex];
+            // Pasi të kemi kaluar te pyetja tjetër, lejojmë shfaqjen e butonave
+            waitingForAnswer = false;
+            addChatMessage(`📌 Pyetja ${currentQuestionIndex+1}/${currentQuizQuestions.length}: ${q.text}`, false, q.options);
+            waitingForAnswer = true;
         }
 
-        function timeToMinutes(timeStr) {
-            if (!timeStr) return 0;
-            const parts = timeStr.split(':');
-            if (parts.length < 2) return 0;
-            const h = parseInt(parts[0]) || 0;
-            const m = parseInt(parts[1]) || 0;
-            return h * 60 + m;
+        function endQuiz() {
+            waitingForAnswer = false;
+            let message = "";
+            if (quizScore >= 1 && quizScore <= 3) {
+                message = `🌱 Rezultati: ${quizScore} nga ${currentQuizQuestions.length}. "Fillimi është gjysma e suksesit! Vazhdo të mësosh më shumë për fenë tënde. Allahu të shpërbleftë!"`;
+            } else if (quizScore >= 4 && quizScore <= 6) {
+                message = `📚 Rezultati: ${quizScore} nga ${currentQuizQuestions.length}. "Shumë mirë! Ke njohuri të mira, por mund t'i thellosh akoma. Lexo më shumë Kur'an dhe hadithe."`;
+            } else if (quizScore >= 7 && quizScore <= 10) {
+                message = `🌟 Rezultati: ${quizScore} nga ${currentQuizQuestions.length}. "Mrekullisht! Njohuritë e tua janë të shkëlqyera. Vazhdo të ndash këtë dije me të tjerët!"`;
+            } else {
+                message = `Rezultati: ${quizScore} nga ${currentQuizQuestions.length}. `;
+            }
+            addChatMessage(message);
+            addChatMessage("Dëshiron të provosh përsëri? Shkruaj 'po' për një test të ri.");
+            chatStep = 2;
         }
 
-        function formatDuration(min) {
-            if (min < 0) min = 0;
-            const h = Math.floor(min / 60);
-            const m = min % 60;
-            return `${h}h ${m}m`;
+        function startQuiz() {
+            currentQuizQuestions = getRandomQuestions(CHAT_QUESTIONS_PER_QUIZ);
+            currentQuestionIndex = 0;
+            quizScore = 0;
+            waitingForAnswer = false;
+            chatStep = 1;
+            askNextQuestion();
         }
+
+        function handleChatAnswer(answer) {
+            if (chatStep === 0) {
+                if (answer.trim().length > 0) {
+                    chatUserName = answer.trim();
+                    addChatMessage(`Mirë se vjen, ${chatUserName}! 🤲 Unë jam testi i dijes islame. Do të të bëj 10 pyetje rastësisht nga një bankë me pyetje. Përgjigju duke zgjedhur opsionin. Fillojmë?`);
+                    startQuiz();
+                } else {
+                    addChatMessage("Ju lutem, më trego emrin tënd.");
+                }
+            } 
+            else if (chatStep === 2) {
+                if (answer.toLowerCase() === "po") {
+                    addChatMessage("Le të fillojmë një test të ri!");
+                    startQuiz();
+                } else {
+                    addChatMessage("Faleminderit që testove njohuritë e tua! Allahu të bekoftë! 🤲 Shkruaj 'po' kur të duash të provosh sërish.");
+                }
+            }
+        }
+
+        function sendChatMessage() {
+            const text = chatInput.value.trim();
+            if (text === "") return;
+            addChatMessage(text, true);
+            chatInput.value = "";
+            if (chatStep === 1 && waitingForAnswer) {
+                handleQuizAnswer(text);
+            } else {
+                handleChatAnswer(text);
+            }
+        }
+
+        const chatMessagesDiv = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+        const chatFloatBtn = document.getElementById('chatFloatBtn');
+        const chatWindow = document.getElementById('chatWindow');
+        const closeChatBtn = document.getElementById('closeChatBtn');
+
+        chatSendBtn.addEventListener('click', sendChatMessage);
+        chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendChatMessage(); });
+        chatFloatBtn.addEventListener('click', () => chatWindow.classList.remove('hidden'));
+        closeChatBtn.addEventListener('click', () => chatWindow.classList.add('hidden'));
     </script>
 </body>
 </html>
