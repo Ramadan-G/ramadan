@@ -713,10 +713,36 @@
             background: white;
             border: 1px solid #e6b17e;
             border-radius: 30px;
-            padding: 4px 12px;
-            font-size: 0.75rem;
+            padding: 8px 16px;
+            font-size: 0.85rem;
             cursor: pointer;
             color: #b35e3a;
+            transition: 0.1s;
+        }
+        .chat-opt-btn:active {
+            transform: scale(0.96);
+            background: #e6b17e;
+            color: white;
+        }
+        /* Stili për pasqyrën e rezultateve */
+        .quiz-summary {
+            background: #fef5e8;
+            border-radius: 20px;
+            padding: 12px;
+            margin-top: 12px;
+            border-left: 4px solid #e6b17e;
+            font-size: 0.8rem;
+        }
+        .quiz-summary .wrong {
+            color: #d9534f;
+            font-weight: bold;
+        }
+        .quiz-summary .correct {
+            color: #5cb85c;
+        }
+        .quiz-summary hr {
+            margin: 8px 0;
+            border-color: #f0dccc;
         }
     </style>
 </head>
@@ -731,7 +757,7 @@
     </div>
 
     <div class="app" id="mainApp" style="display: none;">
-        <!-- Header -->
+        <!-- Header dhe pjesa tjetër e aplikacionit (e njëjtë si më parë) -->
         <div class="header">
             <div class="title">
                 <h1>Ramazani 2026/1447</h1>
@@ -746,7 +772,6 @@
             </div>
         </div>
 
-        <!-- Koha e namazeve -->
         <div class="card">
             <div class="card-header"><span>🕋</span> Koha e namazeve</div>
             <div class="location-row">
@@ -760,7 +785,6 @@
             <div class="prayer-times-grid" id="prayerTimesContainer"></div>
         </div>
 
-        <!-- Namazet farz -->
         <div class="card">
             <div class="card-header"><span>🕋</span> Namazet farz</div>
             <div class="farz-grid">
@@ -772,7 +796,6 @@
             </div>
         </div>
 
-        <!-- Sunetet -->
         <div class="card">
             <div class="card-header"><span>🕌</span> Sunetet</div>
             <div class="sunnah-list">
@@ -786,7 +809,6 @@
             </div>
         </div>
 
-        <!-- Namazet vullnetare -->
         <div class="card">
             <div class="card-header"><span>🕌</span> Namazet vullnetare</div>
             <div class="rakat-selector"><span class="rakat-label">Duha</span><div class="rakat-controls"><button class="rakat-btn" onclick="changeRakat('duha', -2)">−</button><span class="rakat-num" id="duhaRakat">0</span><button class="rakat-btn" onclick="changeRakat('duha', 2)">+</button></div></div>
@@ -795,14 +817,12 @@
             <div class="rakat-selector"><span class="rakat-label">Teravite</span><div class="rakat-controls"><button class="rakat-btn" onclick="changeRakat('teravi', -2)">−</button><span class="rakat-num" id="teraviRakat">0</span><button class="rakat-btn" onclick="changeRakat('teravi', 2)">+</button></div></div>
         </div>
 
-        <!-- Lutjet (Dhikr) -->
         <div class="card">
             <div class="card-header"><span>📿</span> Lutjet (Dhikr)</div>
             <div class="dhikr-list" id="dhikrContainer"></div>
             <button class="save-btn" style="margin-top: 20px;" onclick="resetAllDhikr()">Rivendos të gjitha në 0</button>
         </div>
 
-        <!-- Kur'ani -->
         <div class="card">
             <div class="card-header"><span>📖</span> Kur'ani (faqe)</div>
             <div class="page-input-group"><label>Nga:</label><input type="number" id="fromPage" value="1" min="1" max="604" onchange="saveCurrentDay()"><label>në:</label><input type="number" id="toPage" value="1" min="1" max="604" onchange="saveCurrentDay()"></div>
@@ -810,7 +830,6 @@
             <div style="margin-top: 24px;"><span>Gjithsej në muaj: <span id="totalPagesRead">0</span> / 604 faqe</span><div class="progress-bg"><div class="progress-fill" id="quranProgress" style="width:0%"></div></div></div>
         </div>
 
-        <!-- Dua dhe reflektim -->
         <div class="card">
             <div class="card-header"><span>🤲</span> Dua dhe reflektim</div>
             <div class="field"><label>Nje Hadith ne ditë</label><textarea id="hadith" rows="2" placeholder="Atij që agjëron një ditë në rrugën e Allahut..." onchange="saveCurrentDay()"></textarea></div>
@@ -820,7 +839,6 @@
             <button class="save-btn" onclick="saveCurrentDay()">Ruaj të dhënat</button>
         </div>
 
-        <!-- Reklama -->
         <div class="card ad-card">
             <img src="https://i.postimg.cc/FKDPHG2b/IMG-20260219-WA0000.jpg" alt="Hurme Sukeri" style="width:100%; border-radius:24px; margin-bottom:16px; border:2px solid #e6b17e;">
             <div class="ad-title">Hurme Sukeri</div>
@@ -915,7 +933,7 @@
 
         window.onload = function() { renderDhikr(); document.getElementById('currentDay').innerText = `Dita ${currentDay}/30`; let savedUser = localStorage.getItem('ramadanUser'); if (savedUser) { userName = savedUser; document.getElementById('userGreeting').innerText = `👤 ${userName}`; document.getElementById('loginOverlay').style.display = 'none'; document.getElementById('mainApp').style.display = 'block'; loadAllData(); getLocation(); } setInterval(updatePrayerCard, 60000); };
 
-        // ==================== CHATBOT (Kuiz me 10 pyetje të rastësishme) ====================
+        // ==================== CHATBOT KUZI ME BUTONA DHE PASQYRË ====================
         const allQuestions = [
             { text: "Cili është muaji i nëntë i kalendarit islam?", options: ["Muharrem", "Ramazan", "Dhul-hixhxhe", "Rabiul-evvel"], correct: "Ramazan" },
             { text: "Sa janë shtyllat e Islamit?", options: ["3", "4", "5", "6"], correct: "5" },
@@ -940,7 +958,13 @@
         ];
 
         const CHAT_QUESTIONS_PER_QUIZ = 10;
-        let chatStep = 0, chatUserName = '', currentQuizQuestions = [], currentQuestionIndex = 0, quizScore = 0, waitingForAnswer = false;
+        let chatStep = 0; // 0: presim emrin, 1: në test, 2: pas testit
+        let chatUserName = '';
+        let currentQuizQuestions = [];
+        let currentQuestionIndex = 0;
+        let quizScore = 0;
+        let waitingForAnswer = false; // Tregon nëse presim përgjigje për pyetjen aktuale
+        let quizAnswers = []; // Array për të ruajtur përgjigjet e përdoruesit { question, userAnswer, correctAnswer, isCorrect }
 
         function getRandomQuestions(count) {
             const shuffled = [...allQuestions];
@@ -956,7 +980,8 @@
             msgDiv.className = isUser ? 'user-msg' : 'bot-msg';
             msgDiv.innerText = text;
             chatMessagesDiv.appendChild(msgDiv);
-            // Butonat shfaqen vetëm nëse ka opsione dhe nuk është mesazh përdoruesi
+            
+            // Nëse ka opsione dhe nuk është mesazh përdoruesi, krijo butonat
             if (options && !isUser) {
                 const optsDiv = document.createElement('div');
                 optsDiv.className = 'chat-options';
@@ -965,7 +990,9 @@
                     btn.className = 'chat-opt-btn';
                     btn.innerText = opt;
                     btn.onclick = () => {
-                        if (waitingForAnswer) return;
+                        // Vetëm nëse po presim përgjigje
+                        if (!waitingForAnswer) return;
+                        // Shto përgjigjen e përdoruesit në chat
                         addChatMessage(opt, true);
                         handleQuizAnswer(opt);
                     };
@@ -978,9 +1005,21 @@
 
         function handleQuizAnswer(answer) {
             if (!waitingForAnswer) return;
+            
             const currentQ = currentQuizQuestions[currentQuestionIndex];
-            if (answer === currentQ.correct) quizScore++;
+            const isCorrect = (answer === currentQ.correct);
+            if (isCorrect) quizScore++;
+            
+            // Ruaj përgjigjen për pasqyrë
+            quizAnswers.push({
+                question: currentQ.text,
+                userAnswer: answer,
+                correctAnswer: currentQ.correct,
+                isCorrect: isCorrect
+            });
+            
             currentQuestionIndex++;
+            
             if (currentQuestionIndex < currentQuizQuestions.length) {
                 askNextQuestion();
             } else {
@@ -990,10 +1029,30 @@
 
         function askNextQuestion() {
             const q = currentQuizQuestions[currentQuestionIndex];
-            // Pasi të kemi kaluar te pyetja tjetër, lejojmë shfaqjen e butonave
-            waitingForAnswer = false;
+            waitingForAnswer = true;  // Tani presim përgjigje
             addChatMessage(`📌 Pyetja ${currentQuestionIndex+1}/${currentQuizQuestions.length}: ${q.text}`, false, q.options);
-            waitingForAnswer = true;
+        }
+
+        function showSummary() {
+            // Ndërto pasqyrën HTML
+            let summaryHtml = `<div class="quiz-summary"><strong>📊 Pasqyra e përgjigjeve:</strong><br>`;
+            quizAnswers.forEach((item, idx) => {
+                const status = item.isCorrect ? "✅" : "❌";
+                const colorClass = item.isCorrect ? "correct" : "wrong";
+                summaryHtml += `<hr>${idx+1}. ${item.question}<br>`;
+                summaryHtml += `➤ Përgjigjja juaj: <span class="${colorClass}">${item.userAnswer}</span><br>`;
+                if (!item.isCorrect) {
+                    summaryHtml += `➤ Përgjigjja e saktë: <span class="correct">${item.correctAnswer}</span><br>`;
+                }
+            });
+            summaryHtml += `<hr><strong>Rezultati: ${quizScore}/${currentQuizQuestions.length}</strong></div>`;
+            
+            // Shtojmë pasqyrën si mesazh të veçantë (bot)
+            const summaryDiv = document.createElement('div');
+            summaryDiv.className = 'bot-msg';
+            summaryDiv.innerHTML = summaryHtml;
+            chatMessagesDiv.appendChild(summaryDiv);
+            chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
         }
 
         function endQuiz() {
@@ -1009,6 +1068,10 @@
                 message = `Rezultati: ${quizScore} nga ${currentQuizQuestions.length}. `;
             }
             addChatMessage(message);
+            
+            // Shfaq pasqyrën e detajuar
+            showSummary();
+            
             addChatMessage("Dëshiron të provosh përsëri? Shkruaj 'po' për një test të ri.");
             chatStep = 2;
         }
@@ -1017,16 +1080,17 @@
             currentQuizQuestions = getRandomQuestions(CHAT_QUESTIONS_PER_QUIZ);
             currentQuestionIndex = 0;
             quizScore = 0;
+            quizAnswers = [];
             waitingForAnswer = false;
             chatStep = 1;
-            askNextQuestion();
+            askNextQuestion();  // Kjo do të vendos waitingForAnswer = true dhe do të shfaq pyetjen me butona
         }
 
         function handleChatAnswer(answer) {
             if (chatStep === 0) {
                 if (answer.trim().length > 0) {
                     chatUserName = answer.trim();
-                    addChatMessage(`Mirë se vjen, ${chatUserName}! 🤲 Unë jam testi i dijes islame. Do të të bëj 10 pyetje rastësisht nga një bankë me pyetje. Përgjigju duke zgjedhur opsionin. Fillojmë?`);
+                    addChatMessage(`Mirë se vjen, ${chatUserName}! 🤲 Unë jam testi i dijes islame. Do të të bëj 10 pyetje rastësisht nga një bankë me pyetje. Përgjigju duke klikuar mbi përgjigjen e saktë. Fillojmë?`);
                     startQuiz();
                 } else {
                     addChatMessage("Ju lutem, më trego emrin tënd.");
@@ -1047,7 +1111,9 @@
             if (text === "") return;
             addChatMessage(text, true);
             chatInput.value = "";
+            // Nëse jemi në mes të testit dhe presim përgjigje, mund të përdoret edhe shkrimi (p.sh. nëse dikush preferon të shkruajë)
             if (chatStep === 1 && waitingForAnswer) {
+                // Trajto përgjigjen e shkruar (p.sh. nëse dikush shkruan "Meka")
                 handleQuizAnswer(text);
             } else {
                 handleChatAnswer(text);
